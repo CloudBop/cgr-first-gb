@@ -14,15 +14,17 @@ if( ! defined ('ABSPATH' ) ) {
 function cgr_first_gb_block_register() {
   //
   $in_footer=false;
-  $deps = array('wp-blocks', 'wp-i18n');
+  $deps = array('wp-blocks', 'wp-i18n', 'wp-element');
   //
   wp_register_script('cgr-first-gb-firstblock-editor-script', 
-    //
+    // link to file 
     plugins_url('blocks/firstblock/index.js', __FILE__),
-    //
+    // dependencies
     $deps, 
-    //
+    // load in footer
     $in_footer);
+  //
+  // 
   //
   register_block_type(
     'cgr-first-gb/firstblock',
