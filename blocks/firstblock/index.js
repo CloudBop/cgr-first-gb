@@ -9,6 +9,16 @@ registerBlockType('cgr-first-gb/firstblock', {
   title: __('First Block', 'cgr-first-gb'),
   description: __('My first block', 'cgr-first-gb'),
   category: 'layout',
+  // icon: 'admin-network',
+  icon: {
+    background: '#f03',
+    foreground: '#fff',
+    // can also use SVG
+    src: 'admin-network'
+  },
+  // keyword filter/search - remember to internationalize output text
+  keywords: [__('photo', 'cgr-first-gb'), __('image', 'cgr-first-gb')],
+  //
   edit: function () {
     return el('p', props = null, 'Editor')
   },
