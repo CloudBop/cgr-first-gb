@@ -1,6 +1,7 @@
 /**
  * ES6 + JSX module.
  */
+import './styles.editor.scss';
 // global wp JS in admin backend
 const { registerBlockType } = wp.blocks;
 // js version of php internationalization fn for text
@@ -17,10 +18,10 @@ registerBlockType('cgr-first-gb/secondblock', {
   // keyword filter/search - remember to internationalize output text
   keywords: [__('photo', 'cgr-first-gb'), __('image', 'cgr-first-gb')],
   // - JSX
-  edit: function () {
-    return <p>Editor</p>
+  edit: ({ className }, ...props) => {
+    return <p className={className}>Editor</p>
   },
-  save: function () {
+  save: (props) => {
     return <p>Saved</p>
     // return el('p', props = null, 'Saved Content')
   }

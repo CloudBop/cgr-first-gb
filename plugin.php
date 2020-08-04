@@ -19,6 +19,7 @@ function cgr_first_gb_block_register_block_type($block, $options=array() ){
       array(
         // notice: won't enqueue duplicate scripts if called more than once - all blocks will use same editor
         'editor_script' => 'cgr-first-gb-editor-script',
+        'editor_style' => 'cgr-first-gb-editor-style'
       ),
       // 'script'  => '',
       // 'style'  => '',
@@ -31,15 +32,22 @@ function cgr_first_gb_block_register_block_type($block, $options=array() ){
 function cgr_first_gb_block_register() {
   //
   $in_footer=false;
-  $deps = array('wp-blocks', 'wp-i18n', 'wp-element');
+  $js_deps = array('wp-blocks', 'wp-i18n', 'wp-element');
+  $css_deps = array('wp-edit-blocks');
   //
   wp_register_script('cgr-first-gb-editor-script', 
     // link to file 
     plugins_url('dist/editor.bundle.js', __FILE__),
     // dependencies
-    $deps, 
+    $js_deps, 
     // load in footer
-    $in_footer);
+    $in_footer
+  );
+  //
+  wp_register_style('cgr-first-gb-editor-style', 
+    // link to css
+    plugins_url('dist/editor.bundle.css', __FILE__), $css_deps
+  );
   //
   // 
   //
