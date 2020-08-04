@@ -6,7 +6,7 @@ var __ = wp.i18n.__;
 var el = wp.element.createElement;
 //
 registerBlockType('cgr-first-gb/firstblock', {
-  title: __('First Block', 'cgr-first-gb'),
+  title: __('First test Block', 'cgr-first-gb'),
   description: __('My first block', 'cgr-first-gb'),
   category: 'layout',
   // icon: 'admin-network',

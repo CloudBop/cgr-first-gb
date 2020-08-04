@@ -11,14 +11,31 @@ if( ! defined ('ABSPATH' ) ) {
   exit;
 }
 
+function cgr_first_gb_block_register_block_type($block, $options=array() ){
+  //
+  register_block_type(
+    'cgr-first-gb/'.$block,  
+    array_merge(
+      array(
+        // notice: won't enqueue duplicate scripts if called more than once - all blocks will use same editor
+        'editor_script' => 'cgr-first-gb-editor-script',
+      ),
+      // 'script'  => '',
+      // 'style'  => '',
+      // 'editor_style'  => ''
+      $options
+    )
+  );
+}
+
 function cgr_first_gb_block_register() {
   //
   $in_footer=false;
   $deps = array('wp-blocks', 'wp-i18n', 'wp-element');
   //
-  wp_register_script('cgr-first-gb-firstblock-editor-script', 
+  wp_register_script('cgr-first-gb-editor-script', 
     // link to file 
-    plugins_url('blocks/firstblock/index.js', __FILE__),
+    plugins_url('dist/editor.bundle.js', __FILE__),
     // dependencies
     $deps, 
     // load in footer
@@ -26,15 +43,9 @@ function cgr_first_gb_block_register() {
   //
   // 
   //
-  register_block_type(
-    'cgr-first-gb/firstblock',
-    array(
-      'editor_script' => 'cgr-first-gb-firstblock-editor-script',
-      // 'script'  => '',
-      // 'style'  => '',
-      // 'editor_style'  => ''
-    )
-  );
+  cgr_first_gb_block_register_block_type('firstblock');
+  cgr_first_gb_block_register_block_type('secondblock');
+
 }
 
 add_action('init', 'cgr_first_gb_block_register');
