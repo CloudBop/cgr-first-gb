@@ -88,7 +88,9 @@ module.exports = (env, argv) => {
     },
     // don't bundle with webpack, use WP version
     externals: {
-      jquery: "jQuery"
+      jquery: "jQuery",
+      '@wordpress/blocks': ['wp', 'blocks'],
+      '@wordpress/i18n': ['wp', 'i18n']
     }
   };
   return config;

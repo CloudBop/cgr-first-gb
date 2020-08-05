@@ -3,9 +3,9 @@
  */
 import './styles.editor.scss';
 // global wp JS in admin backend
-const { registerBlockType } = wp.blocks;
+import { registerBlockType } from '@wordpress/blocks';
 // js version of php internationalization fn for text
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
 //
