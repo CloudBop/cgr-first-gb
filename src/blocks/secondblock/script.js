@@ -1,8 +1,9 @@
 import './style.scss';
+// don't bundle with webpack
+import $ from 'jquery';
 
-const $ = jQuery;
-
-console.log($);
+// global jquery from WP
+// const $ = jQuery;
 
 $(document).on("click", ".wp-block-cgr-first-gb-secondblock", () => {
   alert('hello world!')
