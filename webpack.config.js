@@ -44,7 +44,7 @@ module.exports = (env, argv) => {
         {
           test: /\.js$/,
           exclude: /node_modules/,
-          use: {
+          use: [{
             loader: 'babel-loader',
             options: {
               presets: [
@@ -66,7 +66,8 @@ module.exports = (env, argv) => {
                 ]
               ]
             }
-          }
+          },
+            'eslint-loader']
         },
         {
           test: /\.(sa|sc|c)ss$/,

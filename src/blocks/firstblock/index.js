@@ -20,9 +20,9 @@ registerBlockType('cgr-first-gb/firstblock', {
   keywords: [__('photo', 'cgr-first-gb'), __('image', 'cgr-first-gb')],
   //
   edit: function () {
-    return el('p', props = null, 'Editor')
+    return el('p', null, 'Editor')
   },
   save: function () {
-    return el('p', props = null, 'Saved Content')
+    return el('p', null, 'Saved Content')
   }
 })
