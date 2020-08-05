@@ -1,26 +1,26 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2020": true
+    env: {
+        browser: true,
+        es2020: true,
+        node: true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
-    ],
-    "globals": {
-        "wp": "readonly"
+    extends: ["eslint:recommended", "prettier", "plugin:react/recommended"],
+    globals: {
+        wp: "readonly"
     },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true
         },
-        "ecmaVersion": 11,
-        "sourceType": "module"
+        ecmaVersion: 11,
+        sourceType: "module"
     },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        'no-console': 'warn'
+    plugins: ["react"],
+    rules: {
+        "no-console": "warn",
+        "no-unused-vars": "warn",
+        "react/react-in-jsx-scope": "off",
+        "react/display-name": "off",
+        "react/prop-types": "off"
     }
 };
