@@ -46,7 +46,9 @@ function cgr_first_gb_block_register() {
     $in_footer
   );
   wp_register_script('cgr-script', 
-    plugins_url('dist/script.bundle.js', __FILE__)
+    plugins_url('dist/script.bundle.js', __FILE__),
+    // include file after jquery
+    array('jquery')
   );
   //
   wp_register_style(
