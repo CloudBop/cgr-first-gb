@@ -8,6 +8,7 @@ import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import { RichText, BlockControls } from "@wordpress/editor";
+import { Toolbar } from "@wordpress/components";
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
 //
@@ -74,7 +75,52 @@ registerBlockType("cgr-first-gb/secondblock", {
                             }
                         ]
                     ]}
-                />
+                >
+                    <Toolbar
+                        // place toolbar controls in dropdown
+                        isCollapsed
+                        controls={[
+                            [
+                                {
+                                    icon: "wordpress",
+                                    title: __("test", "cgr-first-gb"),
+                                    onClick: () => alert(true),
+                                    isActive: false
+                                }
+                            ],
+                            [
+                                {
+                                    icon: "wordpress",
+                                    title: __("test", "cgr-first-gb"),
+                                    onClick: () => alert(true),
+                                    isActive: false
+                                }
+                            ]
+                        ]}
+                    />
+                    <Toolbar
+                        // place toolbar controls in dropdown
+                        isCollapsed
+                        controls={[
+                            [
+                                {
+                                    icon: "wordpress",
+                                    title: __("test", "cgr-first-gb"),
+                                    onClick: () => alert(true),
+                                    isActive: false
+                                }
+                            ],
+                            [
+                                {
+                                    icon: "wordpress",
+                                    title: __("test", "cgr-first-gb"),
+                                    onClick: () => alert(true),
+                                    isActive: false
+                                }
+                            ]
+                        ]}
+                    />
+                </BlockControls>
                 <RichText
                     tagName="p"
                     className={className}
