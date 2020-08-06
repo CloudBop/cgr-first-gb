@@ -7,7 +7,7 @@ import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText } from "@wordpress/editor";
+import { RichText, BlockControls } from "@wordpress/editor";
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
 //
@@ -53,14 +53,32 @@ registerBlockType("cgr-first-gb/secondblock", {
             setAttributes({ content });
         };
         return (
-            <RichText
-                tagName="p"
-                className={className}
-                onChange={onChangeEditor}
-                value={content}
-                // RichText formatting
-                formattingControls={["bold"]}
-            />
+            <>
+                <BlockControls
+                    controls={[
+                        {
+                            icon: "wordpress",
+                            title: __("test", "cgr-first-gb"),
+                            onClick: () => alert(true),
+                            isActive: false
+                        },
+                        {
+                            icon: "wordpress",
+                            title: __("test", "cgr-first-gb"),
+                            onClick: () => alert(true),
+                            isActive: false
+                        }
+                    ]}
+                />
+                <RichText
+                    tagName="p"
+                    className={className}
+                    onChange={onChangeEditor}
+                    value={content}
+                    // RichText formatting
+                    formattingControls={["bold"]}
+                />
+            </>
         );
         // return <p className={className}>Editor</p>;
     },
