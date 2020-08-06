@@ -7,8 +7,20 @@ import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText, BlockControls, AlignmentToolbar } from "@wordpress/editor";
-import { Toolbar, DropdownMenu } from "@wordpress/components";
+import {
+    RichText,
+    BlockControls,
+    AlignmentToolbar,
+    InspectorControls
+} from "@wordpress/editor";
+import {
+    Toolbar,
+    DropdownMenu,
+    PanelBody,
+    ToggleControl,
+    ColorPicker,
+    ColorPalette
+} from "@wordpress/components";
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
 //
@@ -63,6 +75,27 @@ registerBlockType("cgr-first-gb/secondblock", {
         };
         return (
             <>
+                <InspectorControls>
+                    <PanelBody title={__("panel-test", "cgr-first-gb")}>
+                        <ToggleControl
+                            label={__("toggle-test", "cgr-first-gb")}
+                            onChange={v => console.log(v)}
+                            value={false}
+                        />
+                    </PanelBody>
+                    <PanelBody>
+                        <ColorPicker
+                            color={"#765"}
+                            onChangeComplete={v => console.log(v)}
+                        />
+                    </PanelBody>
+                    <PanelBody>
+                        <ColorPalette
+                            colors={[{ color: "#324" }, { color: "#456" }]}
+                            onChange={v => console.log(v)}
+                        />
+                    </PanelBody>
+                </InspectorControls>
                 <BlockControls
                     controls={[
                         // either array of objects || array of array of objects. Enabling spacers on block control
