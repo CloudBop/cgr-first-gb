@@ -1,5 +1,6 @@
 /**
  * ES6 + JSX module.
+ * importing libraries allows for auto-completion and intellisense
  */
 import "./styles.editor.scss";
 // global wp JS in admin backend
@@ -38,12 +39,24 @@ registerBlockType("cgr-first-gb/secondblock", {
     // keyword filter/search - remember to internationalize output text
     keywords: [__("photo", "cgr-first-gb"), __("image", "cgr-first-gb")],
     // - JSX
-    edit: ({ className }, ...props) => {
+    attributes: {
+        content: {
+            type: "string"
+        }
+    },
+    edit: ({ className, attributes, setAttributes }, ...props) => {
+        const { content } = attributes;
+        const onChangeEditor = content => {
+            setAttributes({ content });
+        };
         return (
             <RichText
                 tagName="p"
                 className={className}
-                onChange={value => console.log(value)}
+                onChange={onChangeEditor}
+                value={content}
+                // RichText formatting
+                formattingControls={["bold"]}
             />
         );
         // return <p className={className}>Editor</p>;
