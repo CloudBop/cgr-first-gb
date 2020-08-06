@@ -7,7 +7,7 @@ import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText, BlockControls } from "@wordpress/editor";
+import { RichText, BlockControls, AlignmentToolbar } from "@wordpress/editor";
 import { Toolbar, DropdownMenu } from "@wordpress/components";
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
@@ -46,12 +46,20 @@ registerBlockType("cgr-first-gb/secondblock", {
             // the store block user data, without this it is stored as json within block
             source: "html",
             selector: "p"
+        },
+        alignment: {
+            type: "string"
         }
     },
     edit: ({ className, attributes, setAttributes }, ...props) => {
-        const { content } = attributes;
+        const { content, alignment } = attributes;
+        // save text to attribute
         const onChangeEditor = content => {
             setAttributes({ content });
+        };
+        // save alignment
+        const onChangeAlignment = alignment => {
+            setAttributes({ alignment });
         };
         return (
             <>
@@ -76,6 +84,10 @@ registerBlockType("cgr-first-gb/secondblock", {
                         ]
                     ]}
                 >
+                    <AlignmentToolbar
+                        isCollapsed={0}
+                        onChange={onChangeAlignment}
+                    />
                     <Toolbar
                         // place toolbar controls in dropdown
                         isCollapsed
@@ -134,15 +146,22 @@ registerBlockType("cgr-first-gb/secondblock", {
                     value={content}
                     // RichText formatting
                     formattingControls={["bold"]}
+                    style={{ textAlign: alignment }}
                 />
             </>
         );
         // return <p className={className}>Editor</p>;
     },
     save: ({ attributes }) => {
-        const { content } = attributes;
+        const { content, alignment } = attributes;
         // need to use RichText to display inline formatting
-        return <RichText.Content value={content} tagName="p" />;
+        return (
+            <RichText.Content
+                value={content}
+                tagName="p"
+                style={{ textAlign: alignment }}
+            />
+        );
         // return el('p', props = null, 'Saved Content')
     }
 });
