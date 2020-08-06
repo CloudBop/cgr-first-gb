@@ -98,31 +98,35 @@ registerBlockType("cgr-first-gb/secondblock", {
                             ]
                         ]}
                     />
-                    <Toolbar>
-                        <DropdownMenu
-                            icon="editor-table"
-                            label={__("test", "cgr-first-gb")}
-                            controls={[
-                                [
-                                    {
-                                        icon: "wordpress",
-                                        title: __("test", "cgr-first-gb"),
-                                        onClick: () => alert(true),
-                                        isActive: false
-                                    }
-                                ],
-                                [
-                                    {
-                                        icon: "wordpress",
-                                        title: __("test", "cgr-first-gb"),
-                                        onClick: () => alert(true),
-                                        isActive: false
-                                    }
-                                ]
-                            ]}
-                        />
-                    </Toolbar>
+                    {/* Conditionally render depending on content */}
+                    {content && content.length > 0 && (
+                        <Toolbar>
+                            <DropdownMenu
+                                icon="editor-table"
+                                label={__("test", "cgr-first-gb")}
+                                controls={[
+                                    [
+                                        {
+                                            icon: "wordpress",
+                                            title: __("test", "cgr-first-gb"),
+                                            onClick: () => alert(true),
+                                            isActive: false
+                                        }
+                                    ],
+                                    [
+                                        {
+                                            icon: "wordpress",
+                                            title: __("test", "cgr-first-gb"),
+                                            onClick: () => alert(true),
+                                            isActive: false
+                                        }
+                                    ]
+                                ]}
+                            />
+                        </Toolbar>
+                    )}
                 </BlockControls>
+
                 <RichText
                     tagName="p"
                     className={className}
