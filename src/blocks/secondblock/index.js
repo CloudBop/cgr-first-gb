@@ -61,8 +61,10 @@ registerBlockType("cgr-first-gb/secondblock", {
         );
         // return <p className={className}>Editor</p>;
     },
-    save: props => {
-        return <p>Saved</p>;
+    save: ({ attributes }) => {
+        const { content } = attributes;
+        // need to use RichText to display inline formatting
+        return <RichText.Content value={content} tagName="p" />;
         // return el('p', props = null, 'Saved Content')
     }
 });
