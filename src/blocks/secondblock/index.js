@@ -41,7 +41,10 @@ registerBlockType("cgr-first-gb/secondblock", {
     // - JSX
     attributes: {
         content: {
-            type: "string"
+            type: "string",
+            // the store block user data, without this it is stored as json within block
+            source: "html",
+            selector: "p"
         }
     },
     edit: ({ className, attributes, setAttributes }, ...props) => {
