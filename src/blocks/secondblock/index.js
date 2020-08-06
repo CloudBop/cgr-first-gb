@@ -56,18 +56,23 @@ registerBlockType("cgr-first-gb/secondblock", {
             <>
                 <BlockControls
                     controls={[
-                        {
-                            icon: "wordpress",
-                            title: __("test", "cgr-first-gb"),
-                            onClick: () => alert(true),
-                            isActive: false
-                        },
-                        {
-                            icon: "wordpress",
-                            title: __("test", "cgr-first-gb"),
-                            onClick: () => alert(true),
-                            isActive: false
-                        }
+                        // either array of objects || array of array of objects. Enabling spacers on block control
+                        [
+                            {
+                                icon: "wordpress",
+                                title: __("test", "cgr-first-gb"),
+                                onClick: () => alert(true),
+                                isActive: false
+                            }
+                        ],
+                        [
+                            {
+                                icon: "wordpress",
+                                title: __("test", "cgr-first-gb"),
+                                onClick: () => alert(true),
+                                isActive: false
+                            }
+                        ]
                     ]}
                 />
                 <RichText
