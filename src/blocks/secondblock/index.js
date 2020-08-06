@@ -7,7 +7,6 @@ import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import { RichText } from "@wordpress/editor";
-
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;
 //
@@ -40,7 +39,13 @@ registerBlockType("cgr-first-gb/secondblock", {
     keywords: [__("photo", "cgr-first-gb"), __("image", "cgr-first-gb")],
     // - JSX
     edit: ({ className }, ...props) => {
-        return <RichText />;
+        return (
+            <RichText
+                tagName="p"
+                className={className}
+                onChange={value => console.log(value)}
+            />
+        );
         // return <p className={className}>Editor</p>;
     },
     save: props => {
