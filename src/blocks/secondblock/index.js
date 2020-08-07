@@ -52,7 +52,23 @@ registerBlockType("cgr-first-gb/secondblock", {
     ),
     // keyword filter/search - remember to internationalize output text
     keywords: [__("photo", "cgr-first-gb"), __("image", "cgr-first-gb")],
-    // - JSX
+    styles: [
+        {
+            name: "rounded",
+            label: __("Rounded", "cgr-first-gb"),
+            isDefault: true
+        },
+        {
+            name: "squared",
+            label: __("Squared", "cgr-first-gb"),
+            isDefault: false
+        },
+        {
+            name: "outline",
+            label: __("Outlined", "cgr-first-gb"),
+            isDefault: false
+        }
+    ],
     attributes: {
         content: {
             type: "string",
@@ -119,6 +135,7 @@ registerBlockType("cgr-first-gb/secondblock", {
                             {
                                 // uses theme defined colors in - theme-support
                                 value: backgroundColor,
+                                // shows colors in sidebar dropdown
                                 onChange: onChangeBackgroundColor,
                                 label: __("bg-color", "cgr-first-gb")
                             },
