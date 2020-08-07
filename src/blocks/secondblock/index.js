@@ -28,7 +28,7 @@ import {
 registerBlockType("cgr-first-gb/secondblock", {
     title: __("Second Block", "cgr-first-gb"),
     description: __("My Second block", "cgr-first-gb"),
-    category: "layout",
+    category: "cgr-category",
     // icon: 'admin-network',
     icon: (
         <svg

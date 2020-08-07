@@ -11,6 +11,21 @@ if( ! defined ('ABSPATH' ) ) {
   exit;
 }
 
+function cgr_first_gb_custom_categories( $categories, $post) {
+  return array_merge(
+    $categories,
+    array(
+      array(
+        'slug'=>'cgr-category',
+        'title'=> __('CGR-Category', 'cgr-first-gb'),
+        'icon'=> 'wordpress'
+      )
+    )
+  );
+};
+
+add_filter('block_categories', 'cgr_first_gb_custom_categories', $priority=10, $accepted_args=2);
+
 function cgr_first_gb_block_register_block_type($block, $options=array() ){
   //
   register_block_type(
