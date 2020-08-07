@@ -150,7 +150,7 @@ class Edit extends Component {
                 </BlockControls>
 
                 <RichText
-                    tagName="p"
+                    tagName="h4"
                     className={classes}
                     onChange={this.onChangeEditor}
                     value={content}

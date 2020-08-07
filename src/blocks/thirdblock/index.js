@@ -11,6 +11,40 @@ import { RichText, getColorClassName } from "@wordpress/editor";
 import classnames from "classnames";
 import Edit from "./edit";
 //
+const attributes = {
+    content: {
+        type: "string",
+        // the store block user data, without this it is stored as json within block
+        source: "html",
+        selector: "h4"
+    },
+    alignment: {
+        type: "string"
+    },
+    backgroundColor: {
+        type: "string"
+    },
+    textColor: {
+        type: "string"
+    },
+    customBackgroundColor: {
+        type: "string"
+    },
+    customTextColor: {
+        type: "string"
+    },
+    shadow: {
+        type: "boolean",
+        default: false
+    },
+    shadowOpacity: {
+        type: "number",
+        default: 0.3
+    }
+    //
+    // these need to be set for withColorsHOC to allow custom colors
+    //
+};
 registerBlockType("cgr-first-gb/thirdblock", {
     title: __("Third Block", "cgr-first-gb"),
     description: __("My Third block", "cgr-first-gb"),
@@ -41,40 +75,72 @@ registerBlockType("cgr-first-gb/thirdblock", {
             isDefault: false
         }
     ],
-    attributes: {
-        content: {
-            type: "string",
-            // the store block user data, without this it is stored as json within block
-            source: "html",
-            selector: "p"
-        },
-        alignment: {
-            type: "string"
-        },
-        backgroundColor: {
-            type: "string"
-        },
-        textColor: {
-            type: "string"
-        },
-        customBackgroundColor: {
-            type: "string"
-        },
-        customTextColor: {
-            type: "string"
-        },
-        shadow: {
-            type: "boolean",
-            default: false
-        },
-        shadowOpacity: {
-            type: "number",
-            default: 0.3
+    attributes: attributes,
+    deprecated: [
+        {
+            // supports - if property is set on block it needs to be defined here.
+            attributes: {
+                ...attributes,
+                content: {
+                    type: "string",
+                    // the store block user data, without this it is stored as json within block
+                    source: "html",
+                    selector: "p"
+                }
+            },
+            save: ({ attributes }) => {
+                const {
+                    content,
+                    alignment,
+                    backgroundColor,
+                    textColor,
+                    customBackgroundColor,
+                    customTextColor,
+                    shadow,
+                    shadowOpacity
+                } = attributes;
+                //
+                const backgroundClass = getColorClassName(
+                    "background-color",
+                    backgroundColor
+                );
+                const textColorClass = getColorClassName("color", textColor);
+                //
+                const classes = classnames({
+                    // classnames: true - appemd classname if it truthy
+                    [backgroundClass]: backgroundClass,
+                    [textColorClass]: textColorClass,
+                    ["has-shadow"]: shadow,
+                    [`shadow-opacity-${shadowOpacity * 100}`]:
+                        shadowOpacity && shadow
+                });
+                // let classes = '';
+                // if (textColor) {
+                //     classes = +' ' + textColor;
+                // }
+                // if (backgroundColor) {
+                //     classes = +' ' + backgroundColor;
+                // }
+
+                return (
+                    // need to use RichText to display inline formatting
+                    <RichText.Content
+                        value={content}
+                        tagName="p"
+                        className={classes}
+                        style={{
+                            textAlign: alignment,
+                            backgroundColor: backgroundClass
+                                ? undefined
+                                : customBackgroundColor,
+                            color: textColorClass ? undefined : customTextColor
+                        }}
+                    />
+                );
+                // return el('p', props = null, 'Saved Content')
+            }
         }
-        //
-        // these need to be set for withColorsHOC to allow custom colors
-        //
-    },
+    ],
     edit: Edit,
     save: ({ attributes }) => {
         const {
@@ -113,7 +179,7 @@ registerBlockType("cgr-first-gb/thirdblock", {
             // need to use RichText to display inline formatting
             <RichText.Content
                 value={content}
-                tagName="p"
+                tagName="h4"
                 className={classes}
                 style={{
                     textAlign: alignment,
