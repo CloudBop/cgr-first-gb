@@ -1,0 +1,18 @@
+// body {
+//     background-color: red;
+// }
+.wp-block-cgr-first-gb-thirdblock {
+    background-color: #654678;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+
+    &.is-style-squared {
+        border-radius: 0px;
+    }
+
+    &.is-style-outline {
+        border-radius: 0px;
+        border: 2px solid currentColor;
+    }
+}
