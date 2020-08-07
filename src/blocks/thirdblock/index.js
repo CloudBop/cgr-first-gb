@@ -66,6 +66,10 @@ registerBlockType("cgr-first-gb/thirdblock", {
         shadow: {
             type: "boolean",
             default: false
+        },
+        shadowOpacity: {
+            type: "number",
+            default: 0.3
         }
         //
         // these need to be set for withColorsHOC to allow custom colors
@@ -79,7 +83,9 @@ registerBlockType("cgr-first-gb/thirdblock", {
             backgroundColor,
             textColor,
             customBackgroundColor,
-            customTextColor
+            customTextColor,
+            shadow,
+            shadowOpacity
         } = attributes;
         //
         const backgroundClass = getColorClassName(
@@ -91,7 +97,9 @@ registerBlockType("cgr-first-gb/thirdblock", {
         const classes = classnames({
             // classnames: true - appemd classname if it truthy
             [backgroundClass]: backgroundClass,
-            [textColorClass]: textColorClass
+            [textColorClass]: textColorClass,
+            ["has-shadow"]: shadow,
+            [`shadow-opacity-${shadowOpacity * 100}`]: shadowOpacity && shadow
         });
         // let classes = '';
         // if (textColor) {

@@ -12,9 +12,8 @@ import {
     Toolbar,
     DropdownMenu,
     PanelBody,
-    ToggleControl
-    // ColorPicker,
-    // ColorPalette
+    ToggleControl,
+    RangeControl
 } from "@wordpress/components";
 import classnames from "classnames";
 import { Component } from "@wordpress/element";
@@ -36,8 +35,10 @@ class Edit extends Component {
     };
 
     onToggleShadow = () => {
-        console.log("this.props.attributes", this.props.attributes);
         this.props.setAttributes({ shadow: !this.props.attributes.shadow });
+    };
+    onChangeShadowOpacity = shadowOpacity => {
+        this.props.setAttributes({ shadowOpacity });
     };
     render() {
         const {
@@ -48,9 +49,10 @@ class Edit extends Component {
             backgroundColor,
             textColor
         } = this.props;
-        const { content, alignment, shadow } = attributes;
+        const { content, alignment, shadow, shadowOpacity } = attributes;
         const classes = classnames(className, {
-            ["has-shadow"]: shadow
+            ["has-shadow"]: shadow,
+            [`shadow-opacity-${shadowOpacity * 100}`]: shadowOpacity
         });
 
         console.log("classes", classes);
@@ -87,6 +89,19 @@ class Edit extends Component {
                             backgroundColor={backgroundColor.color}
                         />
                     </PanelColorSettings>
+
+                    {shadow && (
+                        <PanelBody title={__("Settings", "cgr-first-gb")}>
+                            <RangeControl
+                                label={__("ShadowOpacity", "cgr-first-gb")}
+                                value={shadowOpacity}
+                                onChange={this.onChangeShadowOpacity}
+                                min={0.1}
+                                max={0.4}
+                                step={0.1}
+                            />
+                        </PanelBody>
+                    )}
                 </InspectorControls>
                 <BlockControls
                     controls={[
