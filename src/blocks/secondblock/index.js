@@ -11,7 +11,8 @@ import {
     RichText,
     BlockControls,
     AlignmentToolbar,
-    InspectorControls
+    InspectorControls,
+    PanelColorSettings
 } from "@wordpress/editor";
 import {
     Toolbar,
@@ -61,10 +62,16 @@ registerBlockType("cgr-first-gb/secondblock", {
         },
         alignment: {
             type: "string"
+        },
+        backgroundColor: {
+            type: "string"
+        },
+        textColor: {
+            type: "string"
         }
     },
     edit: ({ className, attributes, setAttributes }, ...props) => {
-        const { content, alignment } = attributes;
+        const { content, alignment, backgroundColor, textColor } = attributes;
         // save text to attribute
         const onChangeEditor = content => {
             setAttributes({ content });
@@ -72,6 +79,16 @@ registerBlockType("cgr-first-gb/secondblock", {
         // save alignment
         const onChangeAlignment = alignment => {
             setAttributes({ alignment });
+        };
+        const onChangeBackgroundColor = backgroundColor => {
+            setAttributes({ backgroundColor });
+        };
+        const onChangeTextColor = textColor => {
+            if (typeof textColor !== "string") {
+                const { hex } = textColor;
+                setAttributes({ textColor: hex });
+            }
+            setAttributes({ textColor });
         };
         return (
             <>
@@ -83,18 +100,36 @@ registerBlockType("cgr-first-gb/secondblock", {
                             value={false}
                         />
                     </PanelBody>
-                    <PanelBody>
+                    <PanelBody title={__("color-picker-test", "cgr-first-gb")}>
                         <ColorPicker
                             color={"#765"}
-                            onChangeComplete={v => console.log(v)}
+                            onChangeComplete={onChangeTextColor}
                         />
                     </PanelBody>
-                    <PanelBody>
+                    <PanelBody title={__("color-picker-test", "cgr-first-gb")}>
                         <ColorPalette
+                            title={__("color-palette-test", "cgr-first-gb")}
                             colors={[{ color: "#324" }, { color: "#456" }]}
-                            onChange={v => console.log(v)}
+                            onChange={onChangeBackgroundColor}
                         />
                     </PanelBody>
+                    <PanelColorSettings
+                        title={__("panel-color-test", "cgr-first-gb")}
+                        colorSettings={[
+                            {
+                                // uses theme defined colors in - theme-support
+                                value: backgroundColor,
+                                onChange: onChangeBackgroundColor,
+                                label: __("bg-color", "cgr-first-gb")
+                            },
+                            {
+                                // uses theme defined colors in - theme-support
+                                value: textColor,
+                                onChange: onChangeTextColor,
+                                label: __("text-color", "cgr-first-gb")
+                            }
+                        ]}
+                    />
                 </InspectorControls>
                 <BlockControls
                     controls={[
@@ -179,20 +214,28 @@ registerBlockType("cgr-first-gb/secondblock", {
                     value={content}
                     // RichText formatting
                     formattingControls={["bold"]}
-                    style={{ textAlign: alignment }}
+                    style={{
+                        textAlign: alignment,
+                        backgroundColor: backgroundColor,
+                        color: textColor
+                    }}
                 />
             </>
         );
         // return <p className={className}>Editor</p>;
     },
     save: ({ attributes }) => {
-        const { content, alignment } = attributes;
+        const { content, alignment, backgroundColor, textColor } = attributes;
         // need to use RichText to display inline formatting
         return (
             <RichText.Content
                 value={content}
                 tagName="p"
-                style={{ textAlign: alignment }}
+                style={{
+                    textAlign: alignment,
+                    backgroundColor: backgroundColor,
+                    color: textColor
+                }}
             />
         );
         // return el('p', props = null, 'Saved Content')
