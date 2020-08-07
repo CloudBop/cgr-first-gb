@@ -4,7 +4,9 @@ import {
     BlockControls,
     AlignmentToolbar,
     InspectorControls,
-    PanelColorSettings
+    PanelColorSettings,
+    withColors,
+    ContrastChecker
 } from "@wordpress/editor";
 import {
     Toolbar,
@@ -15,7 +17,7 @@ import {
     ColorPalette
 } from "@wordpress/components";
 import { Component } from "@wordpress/element";
-export default class edit extends Component {
+class Edit extends Component {
     constructor(props) {
         super(props);
         this.onChangeEditor = this.onChangeEditor.bind(this);
@@ -25,25 +27,39 @@ export default class edit extends Component {
     }
     // using babel properties plugin.
     onChangeEditor = content => {
-        this.setAttributes({ content });
+        // this.setAttributes({ content });
     };
     // save alignment
     onChangeAlignment(alignment) {
-        this.setAttributes({ alignment });
+        // this.setAttributes({ alignment });
     }
     onChangeBackgroundColor(backgroundColor) {
-        this.setAttributes({ backgroundColor });
+        // this.setAttributes({ backgroundColor });
     }
     onChangeTextColor(textColor) {
         if (typeof textColor !== "string") {
             const { hex } = textColor;
-            this.setAttributes({ textColor: hex });
+            // this.setAttributes({ textColor: hex });
         }
-        this.setAttributes({ textColor });
+        // this.setAttributes({ textColor });
     }
     render() {
-        const { className, attributes } = this.props;
-        const { content, alignment, backgroundColor, textColor } = attributes;
+        // some of these are from withColorHOC
+        const {
+            className,
+            attributes,
+            setTextColor,
+            setBackgroundColor,
+            backgroundColor,
+            textColor
+        } = this.props;
+        //
+        const {
+            content,
+            alignment
+            // backgroundColor:attBGC,
+            // attrTextColor:attTextColor
+        } = attributes;
 
         return (
             <>
@@ -73,19 +89,24 @@ export default class edit extends Component {
                         colorSettings={[
                             {
                                 // uses theme defined colors in - theme-support
-                                value: backgroundColor,
+                                value: backgroundColor.color,
                                 // shows colors in sidebar dropdown
-                                onChange: this.onChangeBackgroundColor,
+                                onChange: setTextColor,
                                 label: __("bg-color", "cgr-first-gb")
                             },
                             {
                                 // uses theme defined colors in - theme-support
                                 value: textColor,
-                                onChange: this.onChangeTextColor,
+                                onChange: setBackgroundColor.color,
                                 label: __("text-color", "cgr-first-gb")
                             }
                         ]}
-                    />
+                    >
+                        <ContrastChecker
+                            textColor={textColor.color}
+                            backgroundColor={backgroundColor.color}
+                        />
+                    </PanelColorSettings>
                 </InspectorControls>
                 <BlockControls
                     controls={[
@@ -172,7 +193,7 @@ export default class edit extends Component {
                     formattingControls={["bold"]}
                     style={{
                         textAlign: alignment,
-                        backgroundColor: backgroundColor,
+                        backgroundColor: backgroundColor.color,
                         color: textColor
                     }}
                 />
@@ -180,3 +201,5 @@ export default class edit extends Component {
         );
     }
 }
+// args from /index.js = props to pass withColors
+export default withColors("backgroundColor", { textColor: "color" })(Edit);

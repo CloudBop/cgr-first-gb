@@ -71,6 +71,14 @@ registerBlockType("cgr-first-gb/secondblock", {
         },
         textColor: {
             type: "string"
+        },
+        //
+        //
+        customBackgroundColor: {
+            type: "string"
+        },
+        customTextColor: {
+            type: "string"
         }
     },
     edit: Edit,
