@@ -7,10 +7,9 @@ import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText } from "@wordpress/editor";
+import { RichText, getColorClassName } from "@wordpress/editor";
+import classnames from "classnames";
 import Edit from "./edit";
-// wordpress react - don't need in es6-jsx module
-// var el = wp.element.createElement;
 //
 registerBlockType("cgr-first-gb/thirdblock", {
     title: __("Third Block", "cgr-first-gb"),
@@ -58,28 +57,58 @@ registerBlockType("cgr-first-gb/thirdblock", {
         textColor: {
             type: "string"
         },
-        //
-        // these need to be set for withColorsHOC to allow custom colors
-        //
         customBackgroundColor: {
             type: "string"
         },
         customTextColor: {
             type: "string"
         }
+        //
+        // these need to be set for withColorsHOC to allow custom colors
+        //
     },
     edit: Edit,
     save: ({ attributes }) => {
-        const { content, alignment, backgroundColor, textColor } = attributes;
-        // need to use RichText to display inline formatting
+        const {
+            content,
+            alignment,
+            backgroundColor,
+            textColor,
+            customBackgroundColor,
+            customTextColor
+        } = attributes;
+        //
+        const backgroundClass = getColorClassName(
+            "background-color",
+            backgroundColor
+        );
+        const textColorClass = getColorClassName("color", textColor);
+        //
+        const classes = classnames({
+            // classnames: true - appemd classname if it truthy
+            [backgroundClass]: backgroundClass,
+            [textColorClass]: textColorClass
+        });
+        // let classes = '';
+        // if (textColor) {
+        //     classes = +' ' + textColor;
+        // }
+        // if (backgroundColor) {
+        //     classes = +' ' + backgroundColor;
+        // }
+
         return (
+            // need to use RichText to display inline formatting
             <RichText.Content
                 value={content}
                 tagName="p"
+                className={classes}
                 style={{
                     textAlign: alignment,
-                    backgroundColor: backgroundColor,
-                    color: textColor
+                    backgroundColor: backgroundClass
+                        ? undefined
+                        : customBackgroundColor,
+                    color: textColorClass ? undefined : customTextColor
                 }}
             />
         );

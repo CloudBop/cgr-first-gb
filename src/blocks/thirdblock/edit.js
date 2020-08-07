@@ -34,7 +34,6 @@ class Edit extends Component {
         this.props.setAttributes({ alignment });
     };
     render() {
-        console.log("this.props", this.props);
         const {
             className,
             attributes,
