@@ -62,6 +62,10 @@ registerBlockType("cgr-first-gb/thirdblock", {
         },
         customTextColor: {
             type: "string"
+        },
+        shadow: {
+            type: "boolean",
+            default: false
         }
         //
         // these need to be set for withColorsHOC to allow custom colors

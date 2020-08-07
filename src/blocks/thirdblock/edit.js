@@ -16,6 +16,7 @@ import {
     // ColorPicker,
     // ColorPalette
 } from "@wordpress/components";
+import classnames from "classnames";
 import { Component } from "@wordpress/element";
 class Edit extends Component {
     constructor(props) {
@@ -33,6 +34,11 @@ class Edit extends Component {
     onChangeAlignment = alignment => {
         this.props.setAttributes({ alignment });
     };
+
+    onToggleShadow = () => {
+        console.log("this.props.attributes", this.props.attributes);
+        this.props.setAttributes({ shadow: !this.props.attributes.shadow });
+    };
     render() {
         const {
             className,
@@ -42,7 +48,12 @@ class Edit extends Component {
             backgroundColor,
             textColor
         } = this.props;
-        const { content, alignment } = attributes;
+        const { content, alignment, shadow } = attributes;
+        const classes = classnames(className, {
+            ["has-shadow"]: shadow
+        });
+
+        console.log("classes", classes);
         return (
             <>
                 <InspectorControls>
@@ -83,19 +94,11 @@ class Edit extends Component {
                         [
                             {
                                 icon: "wordpress",
-                                title: __("test", "cgr-first-gb"),
-                                onClick: () => alert(true),
-                                isActive: false
+                                title: __("Shadow", "cgr-first-gb"),
+                                onClick: this.onToggleShadow,
+                                isActive: shadow
                             }
                         ]
-                        // [
-                        //     {
-                        //         icon: "wordpress",
-                        //         title: __("test", "cgr-first-gb"),
-                        //         onClick: () => alert(true),
-                        //         isActive: false
-                        //     }
-                        // ]
                     ]}
                 >
                     <AlignmentToolbar
@@ -133,7 +136,7 @@ class Edit extends Component {
 
                 <RichText
                     tagName="p"
-                    className={className}
+                    className={classes}
                     onChange={this.onChangeEditor}
                     value={content}
                     // RichText formatting
