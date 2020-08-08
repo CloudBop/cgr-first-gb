@@ -1,5 +1,5 @@
 import { Component } from "@wordpress/element";
-import { RichText } from "@wordpress/editor";
+import { RichText, MediaPlaceholder } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
 
 class TeamMemberEdit extends Component {
@@ -15,6 +15,14 @@ class TeamMemberEdit extends Component {
         const { title, info } = attributes;
         return (
             <div className={className}>
+                <MediaPlaceholder
+                    icon={"format-image"}
+                    onSelect={image => console.log("image", image)}
+                    onSelectURL={url => console.log("url", url)}
+                    onError={error => console.log("error", error)}
+                    accept={"image/*"}
+                    allowedTypes={["image"]}
+                />
                 <RichText
                     className={
                         "wp-block-cgr-first-gb-blocks-team-member__title"
