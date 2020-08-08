@@ -4,7 +4,7 @@
  */
 import "./styles.editor.scss";
 // global wp JS in admin backend
-import { registerBlockType } from "@wordpress/blocks";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import { RichText, getColorClassName } from "@wordpress/editor";
@@ -27,7 +27,6 @@ const attributes = {
     alignment: {
         type: "string"
     },
-
     backgroundColor: {
         type: "string"
     },
@@ -236,6 +235,47 @@ registerBlockType("cgr-first-gb/thirdblock", {
             }
         }
     ],
+    transforms: {
+        from: [
+            {
+                type: "block",
+                blocks: ["core/paragraph"],
+                transform: ({ content, align }, ...attributes) => {
+                    return createBlock("cgr-first-gb/thirdblock", {
+                        content,
+                        textAlignment: align
+                    });
+                }
+            },
+            {
+                type: "prefix",
+                prefix: "#",
+                transform: ({ content }, ...attributes) => {
+                    return createBlock("cgr-first-gb/thirdblock", {
+                        content
+                    });
+                }
+            }
+        ],
+        to: [
+            {
+                type: "block",
+                blocks: ["core/paragraph"],
+                isMatch: ({ content }) => {
+                    // only show transform if
+                    if (content) return true;
+                    //
+                    return false;
+                },
+                transform: ({ content, textAlignment }, ...attributes) => {
+                    return createBlock("core/paragraph", {
+                        content,
+                        align: textAlignment
+                    });
+                }
+            }
+        ]
+    },
     edit: Edit,
     save: ({ attributes }) => {
         const {
