@@ -8,21 +8,28 @@ class TeamMemberEdit extends Component {
     }
     onChangeTitle = title => this.props.setAttributes({ title });
     onChangeInfo = info => this.props.setAttributes({ info });
+    onSelectImage = ({ id, url, img }, ...image) =>
+        this.props.setAttributes({ id, url, img });
     //
     render() {
         // wp generated classname
         const { className, attributes } = this.props;
-        const { title, info } = attributes;
+        const { title, info, url, alt } = attributes;
         return (
             <div className={className}>
-                <MediaPlaceholder
-                    icon={"format-image"}
-                    onSelect={image => console.log("image", image)}
-                    onSelectURL={url => console.log("url", url)}
-                    onError={error => console.log("error", error)}
-                    accept={"image/*"}
-                    allowedTypes={["image"]}
-                />
+                {url ? (
+                    <img src={url} alt={alt} />
+                ) : (
+                    //
+                    <MediaPlaceholder
+                        icon={"format-image"}
+                        onSelect={this.onSelectImage}
+                        onSelectURL={url => console.log("url", url)}
+                        onError={error => console.log("error", error)}
+                        accept={"image/*"}
+                        allowedTypes={["image"]}
+                    />
+                )}
                 <RichText
                     className={
                         "wp-block-cgr-first-gb-blocks-team-member__title"
