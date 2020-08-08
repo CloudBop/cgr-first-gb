@@ -240,21 +240,25 @@ registerBlockType("cgr-first-gb/thirdblock", {
             {
                 type: "block",
                 blocks: ["core/paragraph"],
-                transform: ({ content, align }, ...attributes) => {
-                    return createBlock("cgr-first-gb/thirdblock", {
-                        content,
-                        textAlignment: align
-                    });
-                }
+                transform: ({ content, align }) =>
+                    //...attributes
+                    {
+                        return createBlock("cgr-first-gb/thirdblock", {
+                            content,
+                            textAlignment: align
+                        });
+                    }
             },
             {
                 type: "prefix",
                 prefix: "#",
-                transform: ({ content }, ...attributes) => {
-                    return createBlock("cgr-first-gb/thirdblock", {
-                        content
-                    });
-                }
+                transform: ({ content }) =>
+                    //...attributes
+                    {
+                        return createBlock("cgr-first-gb/thirdblock", {
+                            content
+                        });
+                    }
             }
         ],
         to: [
@@ -267,12 +271,14 @@ registerBlockType("cgr-first-gb/thirdblock", {
                     //
                     return false;
                 },
-                transform: ({ content, textAlignment }, ...attributes) => {
-                    return createBlock("core/paragraph", {
-                        content,
-                        align: textAlignment
-                    });
-                }
+                transform: ({ content, textAlignment }) =>
+                    //...attributes
+                    {
+                        return createBlock("core/paragraph", {
+                            content,
+                            align: textAlignment
+                        });
+                    }
             }
         ]
     },

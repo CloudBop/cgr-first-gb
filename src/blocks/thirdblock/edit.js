@@ -54,8 +54,7 @@ class Edit extends Component {
             ["has-shadow"]: shadow,
             [`shadow-opacity-${shadowOpacity * 100}`]: shadowOpacity
         });
-
-        console.log("classes", classes);
+        //
         return (
             <>
                 <InspectorControls>
