@@ -1,5 +1,5 @@
 // back
-import "./style.editor.scss";
+import "./styles.editor.scss";
 import "./parent";
 // global wp JS in admin backend
 import { registerBlockType, createBlock } from "@wordpress/blocks";
@@ -34,6 +34,10 @@ registerBlockType("cgr-first-gb/team-member", {
     },
     //
     parent: ["cgr-first-gb/team-members"],
+    supports: {
+        reusable: false,
+        html: false
+    },
     // keyword filter/search - remember to internationalize output text
     keywords: [
         __("photo", "cgr-first-gb"),

@@ -22,6 +22,9 @@ registerBlockType("cgr-first-gb/team-members", {
         src: "grid-view"
     },
     attributes,
+    supports: {
+        html: false
+    },
     keywords: [
         __("photo", "cgr-first-gb"),
         __("image", "cgr-first-gb"),
