@@ -1,10 +1,12 @@
 // back
 import "./style.editor.scss";
+import "./parent";
 // global wp JS in admin backend
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
+import { RichText } from "@wordpress/editor";
 //
 const attributes = {
     title: {
@@ -20,7 +22,7 @@ const attributes = {
 };
 
 registerBlockType("cgr-first-gb/team-member", {
-    title: __("Team Members", "cgr-first-gb"),
+    title: __("Team Member", "cgr-first-gb"),
     description: __("My Third block", "cgr-first-gb"),
     category: "cgr-category",
     // icon: 'admin-network',
@@ -30,6 +32,8 @@ registerBlockType("cgr-first-gb/team-member", {
         // can also use SVG
         src: "admin-tools"
     },
+    //
+    parent: ["cgr-first-gb/team-members"],
     // keyword filter/search - remember to internationalize output text
     keywords: [
         __("photo", "cgr-first-gb"),
@@ -57,5 +61,32 @@ registerBlockType("cgr-first-gb/team-member", {
     ],
     attributes: attributes,
     edit: Edit,
-    save: () => null
+    save: ({ attributes }) => {
+        const { title, info } = attributes;
+
+        return (
+            // div.classname auto-set by GB
+            <div>
+                {title && (
+                    <RichText.Content
+                        className={
+                            "wp-block-cgr-first-gb-blocks-team-member__title"
+                        }
+                        tagName={"h4"}
+                        value={title}
+                    />
+                )}
+
+                {info && (
+                    <RichText.Content
+                        className={
+                            "wp-block-cgr-first-gb-blocks-team-member__info"
+                        }
+                        tagName={"p"}
+                        value={info}
+                    />
+                )}
+            </div>
+        );
+    }
 });
