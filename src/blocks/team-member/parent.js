@@ -1,6 +1,14 @@
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-import { InnerBlocks } from "@wordpress/editor";
+import { InnerBlocks, InspectorControls } from "@wordpress/editor";
+import { PanelBody, RangeControl } from "@wordpress/components";
+
+const attributes = {
+    columns: {
+        type: "number",
+        default: 2
+    }
+};
 
 registerBlockType("cgr-first-gb/team-members", {
     title: __("Team Members", "cgr-first-gb"),
@@ -13,6 +21,7 @@ registerBlockType("cgr-first-gb/team-members", {
         // can also use SVG
         src: "grid-view"
     },
+    attributes,
     keywords: [
         __("photo", "cgr-first-gb"),
         __("image", "cgr-first-gb"),
@@ -20,9 +29,25 @@ registerBlockType("cgr-first-gb/team-members", {
         __("member", "cgr-first-gb"),
         __("person", "cgr-first-gb")
     ],
-    edit({ className }) {
+    edit({ className, attributes, setAttributes }) {
+        //
+        const { columns } = attributes;
+        //
+        console.log("attributes", attributes);
         return (
-            <div className={className}>
+            <div className={`${className} has-${columns}-columns`}>
+                <InspectorControls>
+                    <PanelBody>
+                        <RangeControl
+                            label={__("Columns", "cgr-first-gb")}
+                            value={columns}
+                            onChange={columns => setAttributes({ columns })}
+                            max={6}
+                            min={1}
+                            step={1}
+                        />
+                    </PanelBody>
+                </InspectorControls>
                 <InnerBlocks
                     allowedBlocks={["cgr-first-gb/team-member"]}
                     template={[
@@ -42,9 +67,10 @@ registerBlockType("cgr-first-gb/team-members", {
             </div>
         );
     },
-    save() {
+    save({ attributes }) {
+        const { columns } = attributes;
         return (
-            <div>
+            <div className={`has-${columns}-columns`}>
                 <InnerBlocks.Content />
             </div>
         );
