@@ -80,7 +80,10 @@ function cgr_first_gb_block_register() {
   cgr_first_gb_block_register_block_type('firstblock');
   cgr_first_gb_block_register_block_type('secondblock');
   cgr_first_gb_block_register_block_type('thirdblock');
+
+  // nested blocks
   cgr_first_gb_block_register_block_type('team-member');
+  cgr_first_gb_block_register_block_type('team-members');
 
 }
 
