@@ -4,6 +4,7 @@ import "./style.editor.scss";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
+import Edit from "./edit";
 //
 const attributes = {
     title: {
@@ -55,6 +56,6 @@ registerBlockType("cgr-first-gb/team-member", {
         }
     ],
     attributes: attributes,
-    save: () => null,
-    edit: () => null
+    edit: Edit,
+    save: () => null
 });
