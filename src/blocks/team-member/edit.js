@@ -2,7 +2,7 @@ import { Component } from "@wordpress/element";
 import { RichText, MediaPlaceholder } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobUrl } from "@wordpress/blob";
-import { Spinner } from "@wordpress/components";
+import { Spinner, withNotices } from "@wordpress/components";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
@@ -15,9 +15,10 @@ class TeamMemberEdit extends Component {
     onSelectUrl = ({ url }) =>
         this.props.setAttributes({ url, id: null, alt: "" });
     //
+    onUploadError = msg => console.log(msg);
     render() {
         // wp generated classname
-        const { className, attributes } = this.props;
+        const { className, attributes, noticeUI } = this.props;
         const { title, info, url, alt } = attributes;
         return (
             <div className={className}>
@@ -32,9 +33,11 @@ class TeamMemberEdit extends Component {
                         icon={"format-image"}
                         onSelect={this.onSelectImage}
                         onSelectURL={this.onSelectUrl}
-                        onError={error => console.log("error", error)}
+                        onError={this.onUploadError}
                         accept={"image/*"}
                         allowedTypes={["image"]}
+                        // - errors
+                        notices={noticeUI}
                     />
                 )}
                 <RichText
@@ -60,4 +63,4 @@ class TeamMemberEdit extends Component {
     }
 }
 
-export default TeamMemberEdit;
+export default withNotices(TeamMemberEdit);
