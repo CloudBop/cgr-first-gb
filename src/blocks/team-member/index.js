@@ -82,11 +82,18 @@ registerBlockType("cgr-first-gb/team-member", {
     attributes: attributes,
     edit: Edit,
     save: ({ attributes }) => {
-        const { title, info } = attributes;
+        const { title, info, url, alt, id } = attributes;
 
         return (
             // div.classname auto-set by GB
             <div>
+                {url && (
+                    <img
+                        src={url}
+                        alt={alt}
+                        id={id ? "wp-image-${id}" : null}
+                    />
+                )}
                 {title && (
                     <RichText.Content
                         className={
