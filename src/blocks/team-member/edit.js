@@ -1,12 +1,27 @@
 import { Component } from "@wordpress/element";
 import { RichText, MediaPlaceholder } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
-import { isBlobUrl } from "@wordpress/blob";
+import { isBlobURL } from "@wordpress/blob";
 import { Spinner, withNotices } from "@wordpress/components";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
     }
+
+    //
+    componentDidMount() {
+        const { attributes, setAttributes } = this.props;
+        const { url, id } = attributes;
+        // did upload fail to finished before page update
+        if (url && isBlobURL(url) && !id) {
+            setAttributes({
+                url: "",
+                alt: ""
+            });
+        }
+    }
+    //
+
     onChangeTitle = title => this.props.setAttributes({ title });
     onChangeInfo = info => this.props.setAttributes({ info });
     onSelectImage = ({ id, url, img }, ...image) =>
@@ -25,7 +40,7 @@ class TeamMemberEdit extends Component {
                 {url ? (
                     <>
                         <img src={url} alt={alt} />
-                        {isBlobUrl(url) && <Spinner />}
+                        {isBlobURL(url) && <Spinner />}
                     </>
                 ) : (
                     //
