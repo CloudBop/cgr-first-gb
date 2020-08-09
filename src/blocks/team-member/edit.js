@@ -1,7 +1,8 @@
 import { Component } from "@wordpress/element";
 import { RichText, MediaPlaceholder } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
-
+import { isBlobUrl } from "@wordpress/blob";
+import { Spinner } from "@wordpress/components";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +19,10 @@ class TeamMemberEdit extends Component {
         return (
             <div className={className}>
                 {url ? (
-                    <img src={url} alt={alt} />
+                    <>
+                        <img src={url} alt={alt} />
+                        {isBlobUrl(url) && <Spinner />}
+                    </>
                 ) : (
                     //
                     <MediaPlaceholder
