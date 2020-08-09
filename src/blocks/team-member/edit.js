@@ -12,6 +12,9 @@ class TeamMemberEdit extends Component {
     onSelectImage = ({ id, url, img }, ...image) =>
         this.props.setAttributes({ id, url, img });
     //
+    onSelectUrl = ({ url }) =>
+        this.props.setAttributes({ url, id: null, alt: "" });
+    //
     render() {
         // wp generated classname
         const { className, attributes } = this.props;
@@ -28,7 +31,7 @@ class TeamMemberEdit extends Component {
                     <MediaPlaceholder
                         icon={"format-image"}
                         onSelect={this.onSelectImage}
-                        onSelectURL={url => console.log("url", url)}
+                        onSelectURL={this.onSelectUrl}
                         onError={error => console.log("error", error)}
                         accept={"image/*"}
                         allowedTypes={["image"]}
