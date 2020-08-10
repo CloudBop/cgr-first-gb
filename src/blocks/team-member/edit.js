@@ -15,8 +15,10 @@ import {
     Toolbar,
     IconButton,
     PanelBody,
-    TextareaControl
+    TextareaControl,
+    SelectControl
 } from "@wordpress/components";
+import { withSelect } from "@wordpress/data";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
@@ -53,6 +55,32 @@ class TeamMemberEdit extends Component {
         this.props.setAttributes({ url: "", id: null, alt: "" });
 
     onUpdateAlt = alt => this.props.setAttributes({ alt });
+    onSelectImageSize = url => this.props.setAttributes({ url });
+
+    // get the image sizes set within the theme.
+    getImageSizes() {
+        // current image, theme image sizes
+        const { image, imageSizes } = this.props;
+        // if ajax hasn't completed
+        if (!image) return [];
+        let options = [];
+        // image sizes of current image
+        const sizes = image.media_details.sizes;
+        //
+        for (const key in sizes) {
+            const size = sizes[key];
+            // is this size set in current theme?
+            const imageSize = imageSizes.find(size => size.slug === key);
+            //
+            if (imageSize) {
+                options.push({
+                    label: imageSize.name,
+                    value: size.source_url
+                });
+            }
+        }
+        return options;
+    }
     //
     render() {
         // wp generated classname
@@ -72,6 +100,19 @@ class TeamMemberEdit extends Component {
                                     help={__(
                                         `Alternative text describes your image to people who can't see it. Add a short description with its key details`
                                     )}
+                                />
+                            )
+                        }
+                        {id && <p>test</p>}
+                        {
+                            // if img has been uploaded wp will have compiled a few sizes
+                            // img sizes are defined from theme, if an img was uploaded in an old theme then it's sizes will be from the old theme settings
+                            id && (
+                                <SelectControl
+                                    label={__("Image Size", "cgr-first-gb")}
+                                    options={this.getImageSizes()}
+                                    onChange={this.onSelectImageSize}
+                                    value={url}
                                 />
                             )
                         }
@@ -167,5 +208,13 @@ class TeamMemberEdit extends Component {
         );
     }
 }
-
-export default withNotices(TeamMemberEdit);
+// like connect but for WP-redux
+export default withSelect((select, props) => {
+    const id = props.attributes.id;
+    // passed as props
+    return {
+        // wp.data.select('core').getMedia('90')
+        image: id ? select("core").getMedia(id) : null,
+        imageSizes: select("core/editor").getEditorSettings().imageSizes
+    };
+})(withNotices(TeamMemberEdit));
