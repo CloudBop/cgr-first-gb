@@ -4,7 +4,8 @@ import {
     MediaPlaceholder,
     BlockControls,
     MediaUploadCheck,
-    MediaUpload
+    MediaUpload,
+    InspectorControls
 } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobURL } from "@wordpress/blob";
@@ -12,7 +13,9 @@ import {
     Spinner,
     withNotices,
     Toolbar,
-    IconButton
+    IconButton,
+    PanelBody,
+    TextareaControl
 } from "@wordpress/components";
 class TeamMemberEdit extends Component {
     constructor(props) {
@@ -48,6 +51,8 @@ class TeamMemberEdit extends Component {
 
     onRemoveImage = () =>
         this.props.setAttributes({ url: "", id: null, alt: "" });
+
+    onUpdateAlt = alt => this.props.setAttributes({ alt });
     //
     render() {
         // wp generated classname
@@ -55,6 +60,23 @@ class TeamMemberEdit extends Component {
         const { title, info, url, alt, id } = attributes;
         return (
             <>
+                <InspectorControls>
+                    <PanelBody title={__("Image Settings", "cgr-first-gb")}>
+                        {
+                            // N/A for linked images or blob url
+                            url && !isBlobURL(url) && (
+                                <TextareaControl
+                                    label={__("Alt Text", "cgr-first-gb")}
+                                    value={alt}
+                                    onChange={this.onUpdateAlt}
+                                    help={__(
+                                        `Alternative text describes your image to people who can't see it. Add a short description with its key details`
+                                    )}
+                                />
+                            )
+                        }
+                    </PanelBody>
+                </InspectorControls>
                 <BlockControls>
                     {url && (
                         <Toolbar>
