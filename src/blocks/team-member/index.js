@@ -39,8 +39,8 @@ const attributes = {
     social: {
         type: "array",
         default: [
-            { link: "https://facebook.com", icon: "wordpress" },
-            { link: "https://facebook.com", icon: "wordpress" }
+            // { link: "https://facebook.com", icon: "wordpress" },
+            // { link: "https://facebook.com", icon: "wordpress" }
         ],
         // store and retrieve the data from the markup as opposed to storing in JSON within GB
         source: "query",
@@ -85,23 +85,23 @@ registerBlockType("cgr-first-gb/team-member", {
         __("member", "cgr-first-gb"),
         __("person", "cgr-first-gb")
     ],
-    styles: [
-        {
-            name: "rounded",
-            label: __("Rounded", "cgr-first-gb"),
-            isDefault: true
-        },
-        {
-            name: "squared",
-            label: __("Squared", "cgr-first-gb"),
-            isDefault: false
-        },
-        {
-            name: "outline",
-            label: __("Outlined", "cgr-first-gb"),
-            isDefault: false
-        }
-    ],
+    // styles: [
+    //     {
+    //         name: "rounded",
+    //         label: __("Rounded", "cgr-first-gb"),
+    //         isDefault: true
+    //     },
+    //     {
+    //         name: "squared",
+    //         label: __("Squared", "cgr-first-gb"),
+    //         isDefault: false
+    //     },
+    //     {
+    //         name: "outline",
+    //         label: __("Outlined", "cgr-first-gb"),
+    //         isDefault: false
+    //     }
+    // ],
     attributes: attributes,
     edit: Edit,
     save: ({ attributes }) => {

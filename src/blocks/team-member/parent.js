@@ -1,4 +1,4 @@
-import { registerBlockType } from "@wordpress/blocks";
+import { registerBlockType, createBlock } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
 import { InnerBlocks, InspectorControls } from "@wordpress/editor";
 import { PanelBody, RangeControl } from "@wordpress/components";
@@ -26,6 +26,30 @@ registerBlockType("cgr-first-gb/team-members", {
         html: false,
         align: ["wide", "full"]
     },
+    transforms: {
+        from: [
+            {
+                type: "block",
+                blocks: ["core/gallery"],
+                transform: attributes => {
+                    const { columns, images } = attributes;
+                    // create inner blocks
+                    let inner = images.map(({ alt, id, url }) => {
+                        return createBlock("cgr-first-gb/team-member", inner);
+                    });
+                    // return parent
+                    return createBlock(
+                        "cgr-first-gb/team-members",
+                        {
+                            columns: columns
+                        },
+                        inner
+                    );
+                }
+            }
+        ]
+    },
+
     keywords: [
         __("photo", "cgr-first-gb"),
         __("image", "cgr-first-gb"),
@@ -37,7 +61,6 @@ registerBlockType("cgr-first-gb/team-members", {
         //
         const { columns } = attributes;
         //
-        console.log("attributes", attributes);
         return (
             <div className={`${className} has-${columns}-columns`}>
                 <InspectorControls>
