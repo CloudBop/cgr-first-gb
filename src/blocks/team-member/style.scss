@@ -1,3 +1,7 @@
+.social-dragging {
+    list-style: none;
+}
+
 .wp-block-cgr-first-gb-team-members {
     display: flex;
     background-color: wheat;
@@ -39,6 +43,13 @@
             color: #d23535;
             font-size: 14px;
             text-decoration: underline;
+            cursor: pointer;
+        }
+
+        &__addIcon {
+            padding: 2px;
+            line-height: 1;
+            border: 1px dashed #8c969f;
             cursor: pointer;
         }
 

@@ -23,6 +23,12 @@ import {
     TextControl
 } from "@wordpress/components";
 import { withSelect } from "@wordpress/data";
+import {
+    SortableContainer,
+    SortableElement,
+    arrayMove
+} from "react-sortable-hoc";
+
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
@@ -107,7 +113,18 @@ class TeamMemberEdit extends Component {
             isCurrentSocialSelected: null
         });
     };
+    onSortIcons = (oldIdx, newIdx) => {
+        const { setAttributes, attributes } = this.props;
+        const { social } = attributes;
+        //
+        let newSocial = arrayMove(social, oldIdx, newIdx);
 
+        setAttributes({
+            social: newSocial
+        });
+
+        this.setState({ isCurrentSocialSelected: newIdx });
+    };
     // get the image sizes set within the theme.
     getImageSizes() {
         // current image, theme image sizes
@@ -137,6 +154,55 @@ class TeamMemberEdit extends Component {
         // wp generated classname
         const { className, attributes, noticeUI, isSelected } = this.props;
         const { title, info, url, alt, id, social } = attributes;
+
+        const SortableList = SortableContainer(() => {
+            return (
+                <ul>
+                    {social.map((item, idx) => {
+                        //
+                        let SortableItem = SortableElement(() => {
+                            return (
+                                <li
+                                    key={idx}
+                                    onClick={() =>
+                                        this.setState({
+                                            isCurrentSocialSelected: idx
+                                        })
+                                    }
+                                    className={
+                                        this.state.isCurrentSocialSelected ===
+                                        idx
+                                            ? " is-selected"
+                                            : null
+                                    }
+                                >
+                                    <Dashicon icon={item.icon} size={16} />
+                                </li>
+                            );
+                        });
+                        return <SortableItem key={idx} index={idx} />;
+                    })}
+                    {isSelected && (
+                        <li
+                            className={
+                                "wp-block-cgr-first-gb-team-member__addIconLI"
+                            }
+                        >
+                            <Tooltip text={__("Add Item", "cgr-first-gb")}>
+                                <button
+                                    className={
+                                        "wp-block-cgr-first-gb-team-member__addIcon"
+                                    }
+                                    onClick={this.onAddNewSocial}
+                                >
+                                    <Dashicon icon={"plus"} size={14} />
+                                </button>
+                            </Tooltip>
+                        </li>
+                    )}
+                </ul>
+            );
+        });
         return (
             <>
                 <InspectorControls>
@@ -254,47 +320,14 @@ class TeamMemberEdit extends Component {
                     <div
                         className={"wp-block-cgr-first-gb-team-member__social"}
                     >
-                        <ul className="">
-                            {social.map((item, idx) => (
-                                //
-                                <li
-                                    key={idx}
-                                    onClick={() =>
-                                        this.setState({
-                                            isCurrentSocialSelected: idx
-                                        })
-                                    }
-                                    className={
-                                        this.state.isCurrentSocialSelected ===
-                                        idx
-                                            ? " is-selected"
-                                            : null
-                                    }
-                                >
-                                    <Dashicon icon={item.icon} size={16} />
-                                </li>
-                            ))}
-                            {isSelected && (
-                                <li
-                                    className={
-                                        "wp-block-cgr-first-gb-team-member__addIconLI"
-                                    }
-                                >
-                                    <Tooltip
-                                        text={__("Add Item", "cgr-first-gb")}
-                                    >
-                                        <button
-                                            className={
-                                                "wp-block-cgr-first-gb-team-member__addIcon"
-                                            }
-                                            onClick={this.onAddNewSocial}
-                                        >
-                                            <Dashicon icon={"plus"} size={14} />
-                                        </button>
-                                    </Tooltip>
-                                </li>
-                            )}
-                        </ul>
+                        <SortableList
+                            axis={"x"}
+                            helperClass={"social-dragging"}
+                            distance={"10"}
+                            onSortEnd={({ oldIndex, newIndex }) =>
+                                this.onSortIcons(oldIndex, newIndex)
+                            }
+                        />
                     </div>
                     {this.state.isCurrentSocialSelected !== null && (
                         <div
