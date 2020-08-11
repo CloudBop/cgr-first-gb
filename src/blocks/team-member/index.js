@@ -7,6 +7,7 @@ import { registerBlockType, createBlock } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
 import { RichText } from "@wordpress/editor";
+import { Dashicon } from "@wordpress/components";
 //
 const attributes = {
     title: {
@@ -89,7 +90,7 @@ registerBlockType("cgr-first-gb/team-member", {
     attributes: attributes,
     edit: Edit,
     save: ({ attributes }) => {
-        const { title, info, url, alt, id } = attributes;
+        const { title, info, url, alt, id, social } = attributes;
 
         return (
             // div.classname auto-set by GB
@@ -119,6 +120,26 @@ registerBlockType("cgr-first-gb/team-member", {
                         tagName={"p"}
                         value={info}
                     />
+                )}
+                {social.length > 0 && (
+                    <div
+                        className={"wp-block-cgr-first-gb-team-member__social"}
+                    >
+                        <ul className="">
+                            {social.map((item, idx) => (
+                                //
+                                <li key={"social_" + idx} data-icon={item.icon}>
+                                    <a
+                                        href={item.link}
+                                        rel={"noreferrer noopener"}
+                                        target={"_blank"}
+                                    >
+                                        <Dashicon icon={item.icon} size={16} />
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 )}
             </div>
         );
