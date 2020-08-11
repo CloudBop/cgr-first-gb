@@ -24,6 +24,9 @@ import { withSelect } from "@wordpress/data";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isCurrentSocialSelected: null
+        };
     }
     //
     componentDidMount() {
@@ -37,8 +40,13 @@ class TeamMemberEdit extends Component {
             });
         }
     }
+    componentDidUpdate(prevProps) {
+        // reset state if component !isSelected, IE loses focus
+        if (prevProps.isSelected && !this.props.isSelected) {
+            this.setState({ isCurrentSocialSelected: null });
+        }
+    }
     //
-
     onChangeTitle = title => this.props.setAttributes({ title });
     onChangeInfo = info => this.props.setAttributes({ info });
     onSelectImage = ({ id, url, img }, ...image) =>
@@ -62,6 +70,10 @@ class TeamMemberEdit extends Component {
         const { social } = attributes;
         setAttributes({
             social: [...social, { icon: "wordpress", link: "" }]
+        });
+        // make added item the currently selected item
+        this.setState({
+            isCurrentSocialSelected: social.length
         });
     };
     // get the image sizes set within the theme.
@@ -93,6 +105,7 @@ class TeamMemberEdit extends Component {
         // wp generated classname
         const { className, attributes, noticeUI, isSelected } = this.props;
         const { title, info, url, alt, id, social } = attributes;
+        console.log("attributes", attributes);
         return (
             <>
                 <InspectorControls>
@@ -191,9 +204,7 @@ class TeamMemberEdit extends Component {
                         />
                     )}
                     <RichText
-                        className={
-                            "wp-block-cgr-first-gb-blocks-team-member__title"
-                        }
+                        className={"wp-block-cgr-first-gb-team-member__title"}
                         tagName={"h4"}
                         onChange={this.onChangeTitle}
                         value={title}
@@ -201,9 +212,7 @@ class TeamMemberEdit extends Component {
                         formattingControls={[]}
                     />
                     <RichText
-                        className={
-                            "wp-block-cgr-first-gb-blocks-team-member__info"
-                        }
+                        className={"wp-block-cgr-first-gb-team-member__info"}
                         tagName={"p"}
                         onChange={this.onChangeInfo}
                         value={info}
@@ -212,21 +221,32 @@ class TeamMemberEdit extends Component {
                     />
 
                     <div
-                        className={
-                            "wp-block-cgr-first-gb-blocks-team-member__info"
-                        }
+                        className={"wp-block-cgr-first-gb-team-member__social"}
                     >
                         <ul className="">
                             {social.map((item, idx) => (
                                 //
-                                <li key={idx}>
+                                <li
+                                    key={idx}
+                                    onClick={() =>
+                                        this.setState({
+                                            isCurrentSocialSelected: idx
+                                        })
+                                    }
+                                    className={
+                                        this.state.isCurrentSocialSelected ===
+                                        idx
+                                            ? " is-selected"
+                                            : null
+                                    }
+                                >
                                     <Dashicon icon={item.icon} size={16} />
                                 </li>
                             ))}
                             {isSelected && (
                                 <li
                                     className={
-                                        "wp-block-cgr-first-gb-blocks-team-member__addIconLI"
+                                        "wp-block-cgr-first-gb-team-member__addIconLI"
                                     }
                                 >
                                     <Tooltip
@@ -234,7 +254,7 @@ class TeamMemberEdit extends Component {
                                     >
                                         <button
                                             className={
-                                                "wp-block-cgr-first-gb-blocks-team-member__addIcon"
+                                                "wp-block-cgr-first-gb-team-member__addIcon"
                                             }
                                             onClick={this.onAddNewSocial}
                                         >
