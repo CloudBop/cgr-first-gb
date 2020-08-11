@@ -16,14 +16,15 @@ import {
     IconButton,
     PanelBody,
     TextareaControl,
-    SelectControl
+    SelectControl,
+    Dashicon,
+    Tooltip
 } from "@wordpress/components";
 import { withSelect } from "@wordpress/data";
 class TeamMemberEdit extends Component {
     constructor(props) {
         super(props);
     }
-
     //
     componentDidMount() {
         const { attributes, setAttributes } = this.props;
@@ -56,7 +57,13 @@ class TeamMemberEdit extends Component {
 
     onUpdateAlt = alt => this.props.setAttributes({ alt });
     onSelectImageSize = url => this.props.setAttributes({ url });
-
+    onAddNewSocial = () => {
+        const { setAttributes, attributes } = this.props;
+        const { social } = attributes;
+        setAttributes({
+            social: [...social, { icon: "wordpress", link: "" }]
+        });
+    };
     // get the image sizes set within the theme.
     getImageSizes() {
         // current image, theme image sizes
@@ -84,8 +91,8 @@ class TeamMemberEdit extends Component {
     //
     render() {
         // wp generated classname
-        const { className, attributes, noticeUI } = this.props;
-        const { title, info, url, alt, id } = attributes;
+        const { className, attributes, noticeUI, isSelected } = this.props;
+        const { title, info, url, alt, id, social } = attributes;
         return (
             <>
                 <InspectorControls>
@@ -203,6 +210,41 @@ class TeamMemberEdit extends Component {
                         placeholder={__("Member Info", "cgr-first-gb")}
                         formattingControls={[]}
                     />
+
+                    <div
+                        className={
+                            "wp-block-cgr-first-gb-blocks-team-member__info"
+                        }
+                    >
+                        <ul className="">
+                            {social.map((item, idx) => (
+                                //
+                                <li key={idx}>
+                                    <Dashicon icon={item.icon} size={16} />
+                                </li>
+                            ))}
+                            {isSelected && (
+                                <li
+                                    className={
+                                        "wp-block-cgr-first-gb-blocks-team-member__addIconLI"
+                                    }
+                                >
+                                    <Tooltip
+                                        text={__("Add Item", "cgr-first-gb")}
+                                    >
+                                        <button
+                                            className={
+                                                "wp-block-cgr-first-gb-blocks-team-member__addIcon"
+                                            }
+                                            onClick={this.onAddNewSocial}
+                                        >
+                                            <Dashicon icon={"plus"} size={14} />
+                                        </button>
+                                    </Tooltip>
+                                </li>
+                            )}
+                        </ul>
+                    </div>
                 </div>
             </>
         );
