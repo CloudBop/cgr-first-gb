@@ -41,7 +41,22 @@ const attributes = {
         default: [
             { link: "https://facebook.com", icon: "wordpress" },
             { link: "https://facebook.com", icon: "wordpress" }
-        ]
+        ],
+        // store and retrieve the data from the markup as opposed to storing in JSON within GB
+        source: "query",
+        selector: "wp-block-cgr-first-gb-team-member__social ul li",
+        // data to pull from markup
+        query: {
+            icon: {
+                source: "attribute",
+                attribute: "data-icon"
+            },
+            link: {
+                source: "attribute",
+                selector: "a",
+                attribute: "href"
+            }
+        }
     }
 };
 
