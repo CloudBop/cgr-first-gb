@@ -35,13 +35,42 @@ registerBlockType("cgr-first-gb/team-members", {
                     const { columns, images } = attributes;
                     // create inner blocks
                     let inner = images.map(({ alt, id, url }) => {
-                        return createBlock("cgr-first-gb/team-member", inner);
+                        return createBlock("cgr-first-gb/team-member", {
+                            alt,
+                            id,
+                            url
+                        });
                     });
                     // return parent
                     return createBlock(
                         "cgr-first-gb/team-members",
                         {
                             columns: columns
+                        },
+                        inner
+                    );
+                }
+            },
+            {
+                type: "block",
+                blocks: ["core/image"],
+                // if more than one image is selected
+                isMultiBlock: true,
+                // attributes is array of attributes
+                transform: attributes => {
+                    // create inner blocks
+                    let inner = attributes.map(({ alt, id, url }) => {
+                        return createBlock("cgr-first-gb/team-member", {
+                            alt,
+                            id,
+                            url
+                        });
+                    });
+                    // return parent
+                    return createBlock(
+                        "cgr-first-gb/team-members",
+                        {
+                            columns: 3
                         },
                         inner
                     );
