@@ -5,7 +5,8 @@ import {
     BlockControls,
     MediaUploadCheck,
     MediaUpload,
-    InspectorControls
+    InspectorControls,
+    URLInput
 } from "@wordpress/editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobURL } from "@wordpress/blob";
@@ -18,7 +19,8 @@ import {
     TextareaControl,
     SelectControl,
     Dashicon,
-    Tooltip
+    Tooltip,
+    TextControl
 } from "@wordpress/components";
 import { withSelect } from "@wordpress/data";
 class TeamMemberEdit extends Component {
@@ -265,6 +267,23 @@ class TeamMemberEdit extends Component {
                             )}
                         </ul>
                     </div>
+                    {this.state.isCurrentSocialSelected !== null && (
+                        <div
+                            className={
+                                "wp-block-cgr-first-gb-team-member__linkForm"
+                            }
+                        >
+                            <TextControl label={__("Icon", "cgr-first-gb")} />
+                            <URLInput label={__("URL", "cgr-first-gb")} />
+                            <a
+                                className={
+                                    "wp-block-cgr-first-gb-team-member__removeLink"
+                                }
+                            >
+                                {__("Remove Social", "cgr-first-gb")}
+                            </a>
+                        </div>
+                    )}
                 </div>
             </>
         );

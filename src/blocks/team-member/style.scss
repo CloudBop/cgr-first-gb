@@ -8,7 +8,7 @@
     @for $i from 1 through 6 {
         &.has-#{$i}-columns {
             .wp-block-cgr-first-gb-team-member {
-                width: calc(100% /#{$i}-20px);
+                width: calc(100% /#{$i} - 20px);
             }
         }
     }
@@ -27,6 +27,19 @@
             color: #565656;
             font-weight: 300;
             margin-bottom: 5px;
+        }
+
+        &__linkForm {
+            border: 1px solid #eaeaea;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        &__removeLink {
+            color: #d23535;
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
         }
 
         &__social {
