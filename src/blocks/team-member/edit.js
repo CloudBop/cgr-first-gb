@@ -78,6 +78,36 @@ class TeamMemberEdit extends Component {
             isCurrentSocialSelected: social.length
         });
     };
+
+    onUpdateSocialItem = (type, value) => {
+        const { setAttributes, attributes } = this.props;
+        const { social } = attributes;
+        const { isCurrentSocialSelected } = this.state;
+        const new_social = [...social];
+        new_social[isCurrentSocialSelected][type] = value;
+        setAttributes({ social: new_social });
+    };
+    onRemoveSocialLink = e => {
+        e.preventDefault();
+        const { setAttributes, attributes } = this.props;
+        const { social } = attributes;
+        const { isCurrentSocialSelected } = this.state;
+        //
+        const newSocial = [
+            // 1st half
+            ...social.slice(0, isCurrentSocialSelected),
+            // 2nd half
+            ...social.slice(isCurrentSocialSelected + 1)
+        ];
+        //
+        setAttributes({
+            social: newSocial
+        });
+        this.setState({
+            isCurrentSocialSelected: null
+        });
+    };
+
     // get the image sizes set within the theme.
     getImageSizes() {
         // current image, theme image sizes
@@ -107,7 +137,6 @@ class TeamMemberEdit extends Component {
         // wp generated classname
         const { className, attributes, noticeUI, isSelected } = this.props;
         const { title, info, url, alt, id, social } = attributes;
-        console.log("attributes", attributes);
         return (
             <>
                 <InspectorControls>
@@ -273,12 +302,33 @@ class TeamMemberEdit extends Component {
                                 "wp-block-cgr-first-gb-team-member__linkForm"
                             }
                         >
-                            <TextControl label={__("Icon", "cgr-first-gb")} />
-                            <URLInput label={__("URL", "cgr-first-gb")} />
+                            <TextControl
+                                label={__("Icon", "cgr-first-gb")}
+                                value={
+                                    social[this.state.isCurrentSocialSelected]
+                                        .icon
+                                }
+                                onChange={icon =>
+                                    this.onUpdateSocialItem("icon", icon)
+                                }
+                            />
+
+                            <URLInput
+                                label={__("URL", "cgr-first-gb")}
+                                value={
+                                    social[this.state.isCurrentSocialSelected]
+                                        .link
+                                }
+                                onChange={url =>
+                                    this.onUpdateSocialItem("link", url)
+                                }
+                            />
+
                             <a
                                 className={
                                     "wp-block-cgr-first-gb-team-member__removeLink"
                                 }
+                                onClick={this.onRemoveSocialLink}
                             >
                                 {__("Remove Social", "cgr-first-gb")}
                             </a>
