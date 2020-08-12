@@ -84,7 +84,25 @@ function cgr_first_gb_block_register() {
   // nested blocks
   cgr_first_gb_block_register_block_type('team-member');
   cgr_first_gb_block_register_block_type('team-members');
+  //
+  cgr_first_gb_block_register_block_type('latest-posts', array(
+    'render_callback' => 'cgr_first_gb_render_latest_posts_block',
+    'attributes'=>  array(
+      'numberOfPosts' => array(
+        'type' => 'number',
+        'default'=>5
+      ),
+      'postCategories' => array(
+        'type' => 'string'
+      )
+    )
+  ));
+
 
 }
 
 add_action('init', 'cgr_first_gb_block_register');
+
+function cgr_first_gb_render_latest_posts_block($attributes) {
+  return '<p>test</p>';
+}
