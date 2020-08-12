@@ -97,12 +97,33 @@ function cgr_first_gb_block_register() {
       )
     )
   ));
-
-
 }
 
 add_action('init', 'cgr_first_gb_block_register');
 
 function cgr_first_gb_render_latest_posts_block($attributes) {
-  return '<p>test</p>';
+  $args = array(
+    'posts_per_page' => $attributes['numberOfPosts']
+  );
+
+  $query = new WP_Query($args);
+  $posts = '';
+
+  if($query->have_posts()) {
+    // auto-generated wordpress theme
+    $posts .= '<ul class="wp-block-cgr-first-gb-latest-posts">';
+
+    while($query->have_posts() ) {
+      $query->the_post();
+      //
+      $posts.= '<li> <a href="'. esc_url(get_the_permalink()) . '">' . get_the_title() . '</a></li>';
+    }
+    //
+    $posts .= '</ul>';
+    // after custom loop always reset post data
+    wp_reset_postdata();
+    return $posts;
+  } else {
+    return '<div>' . __('No Posts Found','cgr-first-gb') . "</div>";
+  }
 }
