@@ -49,7 +49,7 @@ function cgr_first_gb_block_register_block_type($block, $options=array() ){
 function cgr_first_gb_block_register() {
   //
   $in_footer=false;
-  $js_deps = array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data');
+  $js_deps = array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor', 'wp-components', 'lodash', 'wp-blob', 'wp-data', 'wp-html-entities');
   $css_deps = array('wp-edit-blocks');
   //
   wp_register_script('cgr-first-gb-editor-script', 
