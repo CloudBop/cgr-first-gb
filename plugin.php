@@ -102,9 +102,14 @@ function cgr_first_gb_block_register() {
 add_action('init', 'cgr_first_gb_block_register');
 
 function cgr_first_gb_render_latest_posts_block($attributes) {
+  //
   $args = array(
     'posts_per_page' => $attributes['numberOfPosts']
   );
+  // filter these categories
+  if($attributes['postCategories']) {
+    $args['cat'] = $attributes['postCategories'];
+  }
 
   $query = new WP_Query($args);
   $posts = '';
