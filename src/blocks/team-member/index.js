@@ -44,7 +44,7 @@ const attributes = {
         ],
         // store and retrieve the data from the markup as opposed to storing in JSON within GB
         source: "query",
-        selector: "wp-block-cgr-first-gb-team-member__social ul li",
+        selector: ".wp-block-cgr-first-gb-team-member__social ul li",
         // data to pull from markup
         query: {
             icon: {
@@ -106,7 +106,7 @@ registerBlockType("cgr-first-gb/team-member", {
     edit: Edit,
     save: ({ attributes }) => {
         const { title, info, url, alt, id, social } = attributes;
-
+        console.log("social", social);
         return (
             // div.classname auto-set by GB
             <div>
@@ -114,14 +114,12 @@ registerBlockType("cgr-first-gb/team-member", {
                     <img
                         src={url}
                         alt={alt}
-                        id={id ? "wp-image-${id}" : null}
+                        id={id ? `wp-image-${id}` : null}
                     />
                 )}
                 {title && (
                     <RichText.Content
-                        className={
-                            "wp-block-cgr-first-gb-blocks-team-member__title"
-                        }
+                        className={"wp-block-cgr-first-gb-team-member__title"}
                         tagName={"h4"}
                         value={title}
                     />
@@ -129,9 +127,7 @@ registerBlockType("cgr-first-gb/team-member", {
 
                 {info && (
                     <RichText.Content
-                        className={
-                            "wp-block-cgr-first-gb-blocks-team-member__info"
-                        }
+                        className={"wp-block-cgr-first-gb-team-member__info"}
                         tagName={"p"}
                         value={info}
                     />
