@@ -4,3 +4,4 @@ import "./blocks/secondblock";
 import "./blocks/thirdblock";
 import "./blocks/team-member";
 import "./blocks/latest-posts";
+import "./blocks/redux-block";
