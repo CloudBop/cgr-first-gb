@@ -1,5 +1,6 @@
 import { Component } from "@wordpress/element";
-import { withSelect } from "@wordpress/data";
+import { withSelect, withDispatch } from "@wordpress/data";
+import { compose } from "@wordpress/compose";
 // import { withSelect } from "@wordpress/data";
 
 class ReduxEdit extends Component {
@@ -11,16 +12,28 @@ class ReduxEdit extends Component {
                 <input
                     type="text"
                     value={this.props.title}
-                    onChange={v => console.log("v", v)}
+                    onChange={e => this.props.onTitleChange(e.target.value)}
                 />
             </div>
         );
     }
 }
 
-export default withSelect(select => {
-    // redux store selector
-    return {
-        title: select("core/editor").getEditedPostAttribute("title")
-    };
-})(ReduxEdit);
+export default compose([
+    //
+    withSelect(select => {
+        // redux store selector -> props in edit
+        return {
+            title: select("core/editor").getEditedPostAttribute("title")
+        };
+    }),
+    //
+    withDispatch(dispatch => {
+        return {
+            // update value
+            onTitleChange: title => {
+                dispatch("core/editor").editPost({ title: title });
+            }
+        };
+    })
+])(ReduxEdit);
