@@ -99,6 +99,7 @@ function cgr_first_gb_block_register() {
   ));
   // no frontend, demo of redux block type
   cgr_first_gb_block_register_block_type('redux-block');
+  cgr_first_gb_block_register_block_type('todo-list');
 }
 
 add_action('init', 'cgr_first_gb_block_register');
