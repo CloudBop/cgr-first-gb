@@ -28,6 +28,11 @@ const actions = {
             type: "POPULATE_TODOS",
             payload: todos
         };
+    },
+    fetchTodos() {
+        return {
+            type: "FETCH_TODOS"
+        };
     }
 };
 
@@ -59,17 +64,20 @@ registerStore("cgr-first-gb/todo", {
     selectors,
     // dispatch state changes
     actions,
+    controls: {
+        FETCH_TODOS() {
+            return fetch(
+                "https://jsonplaceholder.typicode.com/todos?_limit=10"
+            ).then(res => res.json());
+        }
+    },
     // action side-effects, API/AJAX requests
     resolvers: {
-        getTodos() {
-            //
-
-            fetch("https://jsonplaceholder.typicode.com/todos?_limit=10")
-                .then(res => res.json())
-                .then(res => {
-                    dispatch("cgr-first-gb/todo").populateToDos(res);
-                })
-                .catch(e => console.log("e", e));
+        *getTodos() {
+            // generator, pause and allow other execution until promise is fulfilled
+            const todos = yield actions.fetchTodos();
+            // ... a little like SAGAS
+            return actions.populateToDos(todos);
         }
     }
 });
