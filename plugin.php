@@ -30,7 +30,7 @@ function cgr_first_gb_enqeue_block_assets() {
   wp_enqueue_script(
     'cgr-first-gb-editor-assets-js', 
     plugins_url('dist/editor_script.bundle.js', __FILE__), 
-    array()
+    array('wp-data')
   );
 }
 add_action('enqueue_block_editor_assets', 'cgr_first_gb_enqeue_block_assets');
