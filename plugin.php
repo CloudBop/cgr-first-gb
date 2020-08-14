@@ -10,7 +10,7 @@
 if( ! defined ('ABSPATH' ) ) {
   exit;
 }
-
+//
 function cgr_first_gb_custom_categories( $categories, $post) {
   return array_merge(
     $categories,
@@ -23,9 +23,18 @@ function cgr_first_gb_custom_categories( $categories, $post) {
     )
   );
 };
-
 add_filter('block_categories', 'cgr_first_gb_custom_categories', $priority=10, $accepted_args=2);
-
+//
+//
+function cgr_first_gb_enqeue_block_assets() {
+  wp_enqueue_script(
+    'cgr-first-gb-editor-assets-js', 
+    plugins_url('dist/editor_script.bundle.js', __FILE__), 
+    array()
+  );
+}
+add_action('enqueue_block_editor_assets', 'cgr_first_gb_enqeue_block_assets');
+//
 function cgr_first_gb_block_register_block_type($block, $options=array() ){
   //
   register_block_type(

@@ -9,7 +9,11 @@ module.exports = (env, argv) => {
         return argv.mode === "development";
     }
     var config = {
-        entry: { editor: "./src/editor.js", script: "./src/script.js" },
+        entry: {
+            editor: "./src/editor.js",
+            script: "./src/script.js",
+            editor_script: "./src/editor_script.js"
+        },
         output: {
             filename: "[name].bundle.js"
         },
