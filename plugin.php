@@ -149,3 +149,42 @@ function cgr_first_gb_render_latest_posts_block($attributes) {
     return '<div>' . __('No Posts Found','cgr-first-gb') . "</div>";
   }
 }
+
+// really handy for creating custom post type interfaces
+function cgr_first_gb_register_post_template() {
+  // 
+  $post_type_object = get_post_type_object('post');
+  // register meta to post-type or CPT
+  $post_type_object->template = array(
+    // - post meta data block
+    array('cgr-first-gb/meta'),
+    // - p block
+    array('core/paragraph', $attributes = array(
+      'content' => 'subueybdhjkh'
+    )),
+    // nested block
+    array(
+      'cgr-first-gb/team-members',
+      $attributes = array(
+        'columns' => 2
+      ),
+      $nested=array(
+        array('cgr-first-gb/team-member', $attributes = array(
+          'title' => 'Text'
+        )),
+        array('cgr-first-gb/team-member', $attributes = array(
+          'title' => 'Text'
+        ),),
+      )
+    )
+  );
+  // allow re-organisation
+  // $post_type_object->template_lock = 'inset';
+  // stop everything
+  // $post_type_object->template_lock = 'all';
+}
+
+
+
+// attaches block to gb in post type
+add_action('init', 'cgr_first_gb_register_post_template');
