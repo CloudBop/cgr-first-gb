@@ -11,6 +11,8 @@ if( ! defined ('ABSPATH' ) ) {
   exit;
 }
 //
+include_once('src/metabox.php');
+//
 function cgr_first_gb_custom_categories( $categories, $post) {
   return array_merge(
     $categories,
@@ -110,6 +112,7 @@ function cgr_first_gb_block_register() {
   cgr_first_gb_block_register_block_type('redux-block');
   cgr_first_gb_block_register_block_type('todo-list');
   cgr_first_gb_block_register_block_type('todo-list-info');
+  cgr_first_gb_block_register_block_type('meta');
   
 }
 

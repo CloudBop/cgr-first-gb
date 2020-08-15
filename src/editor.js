@@ -6,3 +6,4 @@ import "./blocks/team-member";
 import "./blocks/latest-posts";
 import "./blocks/redux-block";
 import "./blocks/todo-list";
+import "./blocks/meta";
