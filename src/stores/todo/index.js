@@ -78,6 +78,15 @@ const reducer = (state = DEFAULT_STATE, action) => {
 const selectors = {
     getTodos(state) {
         return state;
+    },
+    getTotalTodos(state) {
+        return state.length;
+    },
+    getCompletedTodos(state) {
+        return state.filter(todo => todo.completed).length;
+    },
+    getUncompletedTodos(state) {
+        return state.filter(todo => !todo.completed).length;
     }
 };
 

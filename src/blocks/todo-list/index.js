@@ -1,7 +1,7 @@
 import edit from "./edit";
 import { registerBlockType } from "@wordpress/blocks";
 import { __ } from "@wordpress/i18n";
-
+import "./todoInfo";
 registerBlockType("cgr-first-gb/todo-list", {
     title: __("Redux Todo List", "cgr-first-gb"),
     description: __("A todo list.", "cgr-first-gb"),
