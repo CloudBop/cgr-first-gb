@@ -3,17 +3,63 @@ import { withSelect, withDispatch } from "@wordpress/data";
 import { compose } from "@wordpress/compose";
 
 class ReduxTodoEdit extends Component {
+    state = {
+        newTodo: ""
+    };
     render() {
-        return <div>stuff</div>;
+        const { todos, addTodo } = this.props;
+        console.log(this.props);
+        return (
+            <div>
+                {todos.map((todo, idx) => {
+                    return (
+                        <div
+                            key={idx}
+                            style={
+                                todo.completed
+                                    ? {
+                                          textDecoration: "line-through",
+                                          opacity: "0.5"
+                                      }
+                                    : null
+                            }
+                        >
+                            <input type="checkbox" checked={todo.completed} />
+                            {todo.title}
+                        </div>
+                    );
+                })}
+
+                <input
+                    type="text"
+                    value={this.state.newTodo}
+                    onChange={e => this.setState({ newTodo: e.target.value })}
+                />
+                <button
+                    onClick={() =>
+                        addTodo({ title: this.state.newTodo, completed: false })
+                    }
+                >
+                    Add Todo
+                </button>
+            </div>
+        );
     }
 }
 
 export default compose([
     //
     withSelect(select => {
-        return {};
+        return {
+            todos: select("cgr-first-gb/todo").getTodos()
+        };
     }),
     withDispatch(dispatch => {
-        return {};
+        return {
+            // action creatore in store
+            addTodo: item => {
+                dispatch("cgr-first-gb/todo").addToDo(item);
+            }
+        };
     })
 ])(ReduxTodoEdit);
