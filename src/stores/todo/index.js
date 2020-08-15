@@ -33,6 +33,12 @@ const actions = {
         return {
             type: "FETCH_TODOS"
         };
+    },
+    *toggleTodo(todo) {
+        const response = yield {
+            type: "TOGGLE_TODO",
+            payload: todo
+        };
     }
 };
 
@@ -69,6 +75,23 @@ registerStore("cgr-first-gb/todo", {
             return fetch(
                 "https://jsonplaceholder.typicode.com/todos?_limit=10"
             ).then(res => res.json());
+        },
+        // called via action
+        TOGGLE_TODO({ payload }) {
+            return fetch(
+                `https://jsonplaceholder.typicode.com/todos/${payload.id}`,
+                {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        completed: !payload.completed
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                }
+            )
+                .then(response => response.json())
+                .catch(error => console.log("error", error));
         }
     },
     // action side-effects, API/AJAX requests

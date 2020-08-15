@@ -7,7 +7,7 @@ class ReduxTodoEdit extends Component {
         newTodo: ""
     };
     render() {
-        const { todos, addTodo } = this.props;
+        const { todos, addTodo, toggleTodo } = this.props;
         console.log(this.props);
         return (
             <div>
@@ -24,7 +24,11 @@ class ReduxTodoEdit extends Component {
                                     : null
                             }
                         >
-                            <input type="checkbox" checked={todo.completed} />
+                            <input
+                                type="checkbox"
+                                checked={todo.completed}
+                                onChange={() => toggleTodo(todo)}
+                            />
                             {todo.title}
                         </div>
                     );
@@ -59,6 +63,9 @@ export default compose([
             // action creatore in store
             addTodo: item => {
                 dispatch("cgr-first-gb/todo").addToDo(item);
+            },
+            toggleTodo: todo => {
+                dispatch("cgr-first-gb/todo").toggleTodo(todo);
             }
         };
     })
