@@ -34,10 +34,23 @@ const actions = {
             type: "FETCH_TODOS"
         };
     },
-    *toggleTodo(todo) {
+    *toggleTodo(todo, idx) {
+        // disable btn while request is being made
+        yield {
+            type: "UPDATE_TODO",
+            idx,
+            todo: { ...todo, loading: true }
+        };
+
         const response = yield {
             type: "TOGGLE_TODO",
             payload: todo
+        };
+
+        return {
+            type: "UPDATE_TODO",
+            idx,
+            todo: response
         };
     }
 };
@@ -49,6 +62,11 @@ const reducer = (state = DEFAULT_STATE, action) => {
             return [...state, action.payload];
         case "POPULATE_TODOS":
             return [...state, ...action.payload];
+        case "UPDATE_TODO": {
+            const copy = [...state];
+            copy[action.idx] = action.todo;
+            return copy;
+        }
         //
         //
         default:

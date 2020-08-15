@@ -27,7 +27,8 @@ class ReduxTodoEdit extends Component {
                             <input
                                 type="checkbox"
                                 checked={todo.completed}
-                                onChange={() => toggleTodo(todo)}
+                                onChange={() => toggleTodo(todo, idx)}
+                                disabled={todo.loading}
                             />
                             {todo.title}
                         </div>
@@ -64,8 +65,8 @@ export default compose([
             addTodo: item => {
                 dispatch("cgr-first-gb/todo").addToDo(item);
             },
-            toggleTodo: todo => {
-                dispatch("cgr-first-gb/todo").toggleTodo(todo);
+            toggleTodo: (todo, idx) => {
+                dispatch("cgr-first-gb/todo").toggleTodo(todo, idx);
             }
         };
     })
