@@ -35,8 +35,10 @@
     "dependencies": {
         "@wordpress/blocks": "^6.20.3",
         "@wordpress/compose": "^3.19.3",
+        "@wordpress/edit-post": "^3.21.6",
         "@wordpress/html-entities": "^2.8.0",
         "@wordpress/i18n": "^3.14.0",
+        "@wordpress/plugins": "^2.20.3",
         "jquery": "^3.5.1",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",

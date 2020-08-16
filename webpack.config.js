@@ -98,7 +98,7 @@ module.exports = (env, argv) => {
         // don't bundle with webpack, use WP version
         externals: {
             jquery: "jQuery",
-            loadash: "loadash",
+            lodash: "lodash",
             "@wordpress/blocks": ["wp", "blocks"],
             "@wordpress/i18n": ["wp", "i18n"],
             "@wordpress/editor": ["wp", "editor"],
@@ -106,9 +106,10 @@ module.exports = (env, argv) => {
             "@wordpress/element": ["wp", "element"],
             "@wordpress/blob": ["wp", "blob"],
             "@wordpress/data": ["wp", "data"],
+            "@wordpress/html-entities": ["wp", "htmlEntities"],
             "@wordpress/compose": ["wp", "compose"],
-            // notice the camelcasing!!!
-            "@wordpress/html-entities": ["wp", "htmlEntities"]
+            "@wordpress/plugins": ["wp", "plugins"],
+            "@wordpress/edit-post": ["wp", "editPost"]
         }
     };
     return config;

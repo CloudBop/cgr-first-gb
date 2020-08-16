@@ -32,7 +32,8 @@ function cgr_first_gb_enqeue_block_assets() {
   wp_enqueue_script(
     'cgr-first-gb-editor-assets-js', 
     plugins_url('dist/editor_script.bundle.js', __FILE__), 
-    array('wp-data')
+    // array('wp-data', 'wp-plugins' , 'wp-i18n')
+    array('wp-data', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-components', 'wp-data', 'wp-compose')
   );
 }
 add_action('enqueue_block_editor_assets', 'cgr_first_gb_enqeue_block_assets');
@@ -174,7 +175,7 @@ function cgr_first_gb_register_post_template() {
         )),
         array('cgr-first-gb/team-member', $attributes = array(
           'title' => 'Text'
-        ),),
+        )),
       )
     )
   );

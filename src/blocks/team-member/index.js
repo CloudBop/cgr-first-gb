@@ -2,7 +2,7 @@
 import "./styles.editor.scss";
 import "./parent";
 // global wp JS in admin backend
-import { registerBlockType, createBlock } from "@wordpress/blocks";
+import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
