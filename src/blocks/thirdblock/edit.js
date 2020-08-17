@@ -7,7 +7,9 @@ import {
     PanelColorSettings,
     withColors,
     ContrastChecker
-} from "@wordpress/editor";
+} from "@wordpress/block-editor";
+
+// import {} from '@wordpress/'
 import {
     Toolbar,
     DropdownMenu,
@@ -61,7 +63,7 @@ class Edit extends Component {
                     <PanelBody title={__("panel-test", "cgr-first-gb")}>
                         <ToggleControl
                             label={__("toggle-test", "cgr-first-gb")}
-                            onChange={v => console.log(v)}
+                            onChange={v => console.log(wp)}
                             value={false}
                         />
                     </PanelBody>
@@ -154,7 +156,7 @@ class Edit extends Component {
                     onChange={this.onChangeEditor}
                     value={content}
                     // RichText formatting
-                    formattingControls={["bold"]}
+                    allowedFormats={["bold/core"]}
                     style={{
                         textAlign: alignment,
                         backgroundColor: backgroundColor.color,

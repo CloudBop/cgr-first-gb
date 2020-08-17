@@ -6,5 +6,5 @@ import $ from "jquery";
 // const $ = jQuery;
 
 $(document).on("click", ".wp-block-cgr-first-gb-secondblock", () => {
-    console.log("clicked");
+    console.log("updated clicked");
 });

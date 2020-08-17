@@ -109,7 +109,8 @@ module.exports = (env, argv) => {
             "@wordpress/html-entities": ["wp", "htmlEntities"],
             "@wordpress/compose": ["wp", "compose"],
             "@wordpress/plugins": ["wp", "plugins"],
-            "@wordpress/edit-post": ["wp", "editPost"]
+            "@wordpress/edit-post": ["wp", "editPost"],
+            "@wordpress/block-editor": ["wp", "blockEditor"]
         }
     };
     return config;

@@ -7,7 +7,7 @@ import {
     MediaUpload,
     InspectorControls,
     URLInput
-} from "@wordpress/editor";
+} from "@wordpress/block-editor";
 import { __ } from "@wordpress/i18n";
 import { isBlobURL } from "@wordpress/blob";
 import {
@@ -306,7 +306,7 @@ class TeamMemberEdit extends Component {
                         onChange={this.onChangeTitle}
                         value={title}
                         placeholder={__("Member Name", "cgr-first-gb")}
-                        formattingControls={[]}
+                        // formattingControls={[]}
                     />
                     <RichText
                         className={"wp-block-cgr-first-gb-team-member__info"}
@@ -314,7 +314,7 @@ class TeamMemberEdit extends Component {
                         onChange={this.onChangeInfo}
                         value={info}
                         placeholder={__("Member Info", "cgr-first-gb")}
-                        formattingControls={[]}
+                        // formattingControls={[]}
                     />
 
                     <div

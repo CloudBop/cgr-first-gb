@@ -7,7 +7,7 @@ import "./styles.editor.scss";
 import { registerBlockType, createBlock } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText, getColorClassName } from "@wordpress/editor";
+import { RichText, getColorClassName } from "@wordpress/block-editor";
 import classnames from "classnames";
 import { omit } from "lodash";
 import Edit from "./edit";

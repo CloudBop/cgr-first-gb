@@ -7,7 +7,7 @@ import "./styles.editor.scss";
 import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
-import { RichText } from "@wordpress/editor";
+import { RichText } from "@wordpress/block-editor";
 import Edit from "./edit";
 // wordpress react - don't need in es6-jsx module
 // var el = wp.element.createElement;

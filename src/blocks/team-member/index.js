@@ -6,7 +6,7 @@ import { registerBlockType } from "@wordpress/blocks";
 // js version of php internationalization fn for text
 import { __ } from "@wordpress/i18n";
 import Edit from "./edit";
-import { RichText } from "@wordpress/editor";
+import { RichText } from "@wordpress/block-editor";
 import { Dashicon } from "@wordpress/components";
 //
 const attributes = {

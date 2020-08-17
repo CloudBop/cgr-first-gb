@@ -4,7 +4,7 @@ import { withSelect } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
 import { decodeEntities } from "@wordpress/html-entities";
 import { PanelBody, RangeControl, SelectControl } from "@wordpress/components";
-import { InspectorControls } from "@wordpress/editor";
+import { InspectorControls } from "@wordpress/block-editor";
 //
 class LatestPostsEdit extends Component {
     //

@@ -33,6 +33,7 @@
     },
     "homepage": "https://github.com/alialaa/gutenberg-course-webpack#readme",
     "dependencies": {
+        "@wordpress/block-editor": "^4.3.6",
         "@wordpress/blocks": "^6.20.3",
         "@wordpress/compose": "^3.19.3",
         "@wordpress/edit-post": "^3.21.6",

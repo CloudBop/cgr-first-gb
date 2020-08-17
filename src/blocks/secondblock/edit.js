@@ -5,7 +5,7 @@ import {
     AlignmentToolbar,
     InspectorControls,
     PanelColorSettings
-} from "@wordpress/editor";
+} from "@wordpress/block-editor";
 import {
     Toolbar,
     DropdownMenu,
@@ -25,21 +25,21 @@ export default class edit extends Component {
     }
     // using babel properties plugin.
     onChangeEditor = content => {
-        this.setAttributes({ content });
+        this.props.setAttributes({ content });
     };
     // save alignment
     onChangeAlignment(alignment) {
-        this.setAttributes({ alignment });
+        this.props.setAttributes({ alignment });
     }
     onChangeBackgroundColor(backgroundColor) {
-        this.setAttributes({ backgroundColor });
+        this.props.setAttributes({ backgroundColor });
     }
     onChangeTextColor(textColor) {
         if (typeof textColor !== "string") {
             const { hex } = textColor;
-            this.setAttributes({ textColor: hex });
+            this.props.setAttributes({ textColor: hex });
         }
-        this.setAttributes({ textColor });
+        this.props.setAttributes({ textColor });
     }
     render() {
         const { className, attributes } = this.props;
@@ -169,7 +169,7 @@ export default class edit extends Component {
                     onChange={this.onChangeEditor}
                     value={content}
                     // RichText formatting
-                    formattingControls={["bold"]}
+                    allowedFormats={["core/bold"]}
                     style={{
                         textAlign: alignment,
                         backgroundColor: backgroundColor,
